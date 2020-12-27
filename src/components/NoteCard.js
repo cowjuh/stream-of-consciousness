@@ -98,7 +98,7 @@ const NoteCard = (props) => {
 
     return(
         <Card>
-            <FontAwesomeIcon icon={faPencilAlt} onClick={() => setEditing(!editing)}/>
+            <FontAwesomeIcon icon={faPencilAlt} onClick={() => setEditing(!editing)} cursor="pointer"/>
             {!editing
                 ? <React.Fragment>
                     <h2>{title}</h2>
@@ -114,7 +114,7 @@ const NoteCard = (props) => {
                         </div>
                     }
                     {/* <FontAwesomeIcon icon={faClipboard} color="gray"/> */}
-                    <FontAwesomeIcon icon={faTrash} color="gray" onClick={() => props.handleDelete(props.id)}/>                
+                    <FontAwesomeIcon icon={faTrash} color="gray" onClick={() => props.handleDelete(props.id)} cursor="pointer"/>                
                 </React.Fragment>
                 : <Container>
                     <NoteEditor onSubmit={onSubmit}>
