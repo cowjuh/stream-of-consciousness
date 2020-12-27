@@ -58,7 +58,7 @@ export default function NoteCreator(props){
             content: content,
             tags: tagArray
         }
-        axios.post('/notes/add', newNote)
+        axios.post('http://localhost:5000//notes/add', newNote)
             .then(res => {
                 console.log(res.data);
                 setTitle("");
