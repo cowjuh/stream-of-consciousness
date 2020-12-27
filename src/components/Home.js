@@ -12,7 +12,7 @@ export default function Home() {
   const [notes, setNotes] = useState();
 
   useEffect(() => {
-      axios.get('https://powerful-tor-65274.herokuapp.com/notes/')
+      axios.get('https://localhost:5000/notes/')
           .then(res => {
               setNotes(res.data);
           })
@@ -20,7 +20,7 @@ export default function Home() {
   })
 
   const deleteNote = (id) => {
-    axios.delete(`https://powerful-tor-65274.herokuapp.com/notes/${id}`)
+    axios.delete(`https://localhost:5000/notes/${id}`)
         .then(console.log("Note deleted!"))
         .catch(err => console.log(err));
     
