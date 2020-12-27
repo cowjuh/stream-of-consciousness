@@ -1,37 +1,29 @@
 import React, {useState, useEffect } from 'react';
 import axios from 'axios';
+import styled from 'styled-components';
+import NoteCard from '../components/NoteCard';
 
-export default function NotesList () {
-    const [notes, setNotes] = useState();
-    useEffect(() => {
-        axios.get('http://localhost:5000/notes/')
-            .then(res => {
-                setNotes(res.data);
-            })
-            .catch(err => console.log(err));
-    }, [])
+const Container = styled.div`
+    max-width: 800px;
+`;
 
-    const deleteNote = (id) => {
-        axios.delete(`http://localhost:5000/notes/${id}`)
-            .then(console.log("Note deleted!"))
-            .catch(err => console.log(err));
-        
-        const newNotes = notes.filter(note => note._id !== id);
-        setNotes(newNotes);
-    }
-
+export default function NotesList (props) {
+    const notes = props.notes;
     return (
-        <div>
-        {!notes ? null : notes.map((note) => {
+        <Container>
+        {!notes ? null : notes.slice(0).reverse().map((note) => {
             return(
-                <div>
-                    <h2>{note.title}</h2>
-                    <p>{note.createdAt}</p>
-                    <p>{note.content}</p>
-                    <button onClick={() => deleteNote(note._id)}>Delete</button>
-                </div>
+                <NoteCard
+                    key={note._id}
+                    id={note._id}
+                    title={note.title}
+                    content={note.content}
+                    tags={note.tags? note.tags : null}
+                    createdAt={note.createdAt}
+                    handleDelete={() => props.handleDelete(note._id)}
+                />
             )
         })}
-        </div>
+        </Container>
     )
 }

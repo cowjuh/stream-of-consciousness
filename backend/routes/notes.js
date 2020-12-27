@@ -8,14 +8,15 @@ router.route('/').get((req, res) => {
 });
 
 router.route('/add').post((req, res) => {
-  const username = req.body.username;
   const title = req.body.title;
   const content = req.body.content;
+  const tags = req.body.tags;
   const date = Date.parse(req.body.date);
 
   const newNote = new Note({
     title,
     content,
+    tags,
     date,
   });
 
@@ -41,6 +42,7 @@ Note.findById(req.params.id)
     .then(note => {
     note.title = req.body.title;
     note.content = req.body.content;
+    note.tags = req.body.tags;
     note.date = Date.parse(req.body.date);
 
     note.save()
