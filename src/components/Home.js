@@ -12,7 +12,7 @@ export default function Home() {
   const [notes, setNotes] = useState();
 
   useEffect(() => {
-      axios.get('http://localhost:5000/notes/')
+      axios.get('/notes/')
           .then(res => {
               setNotes(res.data);
           })
@@ -20,7 +20,7 @@ export default function Home() {
   })
 
   const deleteNote = (id) => {
-    axios.delete(`http://localhost:5000/notes/${id}`)
+    axios.delete(`notes/${id}`)
         .then(console.log("Note deleted!"))
         .catch(err => console.log(err));
     

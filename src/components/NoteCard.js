@@ -88,7 +88,7 @@ const NoteCard = (props) => {
             tags: tagArray
         }
         console.log(updatedNote);
-        axios.post(`http://localhost:5000/notes/update/${props.id}`, updatedNote)
+        axios.post(`notes/update/${props.id}`, updatedNote)
             .then(res => {
                 console.log(res.data);
             })
