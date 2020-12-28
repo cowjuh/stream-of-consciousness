@@ -6,6 +6,7 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
 const Container = styled.div`
     max-width: 800px;
+    width: 90%;
 `;
 
 const NoteEditor = styled.form`
@@ -13,6 +14,7 @@ const NoteEditor = styled.form`
     flex-direction: column;
     justify-content: center;
     align-items: start;
+    margin-bottom: 20px;
 `;
 
 const InputField = styled.input`
@@ -21,7 +23,7 @@ const InputField = styled.input`
     padding: 5px;
     background-color: #f0f2f5;
     margin-bottom: 10px;
-    min-width: 500px;
+    width: 100%;
 `;
 
 const TextArea = styled.textarea`
@@ -31,7 +33,9 @@ const TextArea = styled.textarea`
     margin-bottom: 10px;
     background-color: #f0f2f5;
     min-height: 80px;
-    min-width: 500px;
+    box-sizing:border-box;
+    -webkit-box-sizing: border-box;
+    width: 100%;
 `;
 
 const Button = styled.button`
@@ -39,11 +43,10 @@ const Button = styled.button`
     text-align: center;
     border-radius: 5px;
     border: none;
-    background-color: blue;
+    background-color: black;
     padding: 5px 20px;
     color: white;
 `;
-
 export default function NoteCreator(props){
     const [title, setTitle] = useState();
     const [content, setContent] = useState();
@@ -72,8 +75,8 @@ export default function NoteCreator(props){
     return (
       <Container>
         {!open
-            ? <Button onClick={() => setOpen(true)}>New Note</Button>
-            : <React.Fragment>
+            ? <Button onClick={() => setOpen(true)} style={{marginBottom: "20px"}}>New Note</Button>
+            : <div>
                 <FontAwesomeIcon icon={faTimes} onClick={() => setOpen(false)}/>
                 <h2>New Note</h2>
                 <NoteEditor onSubmit={onSubmit}>
@@ -82,7 +85,7 @@ export default function NoteCreator(props){
                     <InputField type="text" required={false} placeholder="Tags (Optional)" onChange={(e) => setTags(e.target.value)} value={tags}/>
                     <Button type="submit" placeholder="Submit">Submit</Button>
                 </NoteEditor>                
-            </React.Fragment>
+            </div>
         }   
       </Container>
     )
