@@ -25,13 +25,13 @@
     "web-vitals": "^0.2.4"
   },
   "scripts": {
-    "client-install": "npm install --prefix client",
+    "client-install": "npm install",
     "start": "node backend/server.js",
     "server": "nodemon backend/server.js",
     "build": "react-scripts build",
-    "client": "npm start --prefix client",
+    "client": "npm start",
     "dev": "concurrently \"npm run server\" \"npm run client\"",
-    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install && npm run build"
   },
   "eslintConfig": {
     "extends": [
