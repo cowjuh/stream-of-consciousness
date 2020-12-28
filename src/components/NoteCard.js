@@ -5,6 +5,8 @@ import { faTrash, faPencilAlt} from '@fortawesome/free-solid-svg-icons';
 import NotePreview from './NotePreview';
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
 
 const Card = styled.div`
     background-color: #f0f2f5;
@@ -61,7 +63,7 @@ const Button = styled.button`
     text-align: center;
     border-radius: 5px;
     border: none;
-    background-color: blue;
+    background-color: black;
     padding: 5px 20px;
     color: white;
 `;
@@ -74,6 +76,8 @@ const NoteCard = (props) => {
     const [stringTags, setStringTags] = useState();
     var createdAt = (new Date(props.createdAt)).toDateString();
     var updatedAt = (new Date(props.updatedAt)).toDateString();
+    dayjs.extend(relativeTime);
+    var lastUpdated = dayjs().to(props.updatedAt);
 
     const onSubmit = (e) => {
         e.preventDefault();
@@ -103,17 +107,13 @@ const NoteCard = (props) => {
 
     return(
         <Card>
-            <div className="d-flex align-items-center">
-                <FontAwesomeIcon icon={faPencilAlt} onClick={() => setEditing(!editing)} cursor="pointer"/>
-                {props.createdAt != props.updatedAt ? <p className="m-0 ml-2">Edited {updatedAt}</p> : null}
-            </div>
             {!editing
                 ? <React.Fragment>
                     <h2>{title}</h2>
                     <p>{createdAt}</p>
                     <NotePreview content={content}/>
                     {!tags ? null : 
-                        <div>{                
+                        <div className="mb-4">{                
                             tags.map((tag) => {
                                 return(
                                     <Tag>{tag}</Tag>
@@ -122,7 +122,11 @@ const NoteCard = (props) => {
                         </div>
                     }
                     {/* <FontAwesomeIcon icon={faClipboard} color="gray"/> */}
-                    <FontAwesomeIcon icon={faTrash} color="gray" onClick={() => props.handleDelete(props.id)} cursor="pointer"/>                
+                    <div className="d-flex align-items-center">
+                        <FontAwesomeIcon icon={faTrash} className="mr-2" color="gray" onClick={() => props.handleDelete(props.id)} cursor="pointer"/>                
+                        <FontAwesomeIcon icon={faPencilAlt} color="gray" onClick={() => setEditing(!editing)} cursor="pointer"/>
+                        {props.createdAt != props.updatedAt ? <p style={{color: "gray"}} className="m-0 ml-2">{lastUpdated}</p> : null}
+                    </div>
                 </React.Fragment>
                 : <Container>
                     <NoteEditor onSubmit={onSubmit}>

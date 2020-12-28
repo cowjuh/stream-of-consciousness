@@ -3,8 +3,8 @@ import styled from 'styled-components';
 import NoteCard from '../components/NoteCard';
 
 const Container = styled.div`
-    max-width: 1000px;
-    width: 60%;
+    max-width: 800px;
+    width: 90%;
 `;
 
 export default function NotesList (props) {
