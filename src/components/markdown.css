@@ -6,4 +6,11 @@ code {
 
 img {
     max-width: 300px;
+    border-radius: 3px;
+}
+
+mark {
+    background-color: rgb(245, 184, 192);
+    border-radius: 3px;
+    padding: 3px 3px;
 }

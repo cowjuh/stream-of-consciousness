@@ -20,6 +20,7 @@ export default function NotesList (props) {
                     content={note.content}
                     tags={note.tags? note.tags : null}
                     createdAt={note.createdAt}
+                    updatedAt={note.updatedAt}
                     handleDelete={() => props.handleDelete(note._id)}
                 />
             )

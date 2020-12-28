@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faPencilAlt} from '@fortawesome/free-solid-svg-icons';
 import NotePreview from './NotePreview';
 import axios from 'axios';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const Card = styled.div`
     background-color: #f0f2f5;
@@ -71,6 +72,8 @@ const NoteCard = (props) => {
     const [content, setContent] = useState(props.content);
     const [tags, setTags] = useState(props.tags);
     const [stringTags, setStringTags] = useState();
+    var createdAt = (new Date(props.createdAt)).toDateString();
+    var updatedAt = (new Date(props.updatedAt)).toDateString();
 
     const onSubmit = (e) => {
         e.preventDefault();
@@ -100,11 +103,14 @@ const NoteCard = (props) => {
 
     return(
         <Card>
-            <FontAwesomeIcon icon={faPencilAlt} onClick={() => setEditing(!editing)} cursor="pointer"/>
+            <div className="d-flex align-items-center">
+                <FontAwesomeIcon icon={faPencilAlt} onClick={() => setEditing(!editing)} cursor="pointer"/>
+                {props.createdAt != props.updatedAt ? <p className="m-0 ml-2">Edited {updatedAt}</p> : null}
+            </div>
             {!editing
                 ? <React.Fragment>
                     <h2>{title}</h2>
-                    <p>{props.createdAt}</p>
+                    <p>{createdAt}</p>
                     <NotePreview content={content}/>
                     {!tags ? null : 
                         <div>{                

@@ -30,7 +30,7 @@ export default function Home() {
 
   return (
     <Container className="d-flex flex-column justify-content-center align-items-center">
-        <h1>Jenny's Stream of Consciousness</h1>
+        <h3>HELLO HELLO HELLO WORLD</h3>
         <NoteCreator onUpdate={setUpdate}/>
         <NotesList notes={notes} handleDelete={deleteNote}/>
     </Container>
