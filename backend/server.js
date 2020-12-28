@@ -5,7 +5,7 @@ const path = require('path');
 const bodyParser = require('body-parser');
 require('dotenv').config();
 
-const publicPath = path.join(__dirname, '..', 'public');
+const publicPath = path.join(__dirname + 'build');
 const uri = process.env.ATLAS_URI;
 const notesRouter = require('./routes/notes');
 
