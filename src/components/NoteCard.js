@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faPencilAlt} from '@fortawesome/free-solid-svg-icons';
 import NotePreview from './NotePreview';
-import NoteCreator from './NoteCreator';
 import axios from 'axios';
 
 const Card = styled.div`
@@ -89,9 +88,12 @@ const NoteCard = (props) => {
             tags: tagArray
         }
         console.log(updatedNote);
-        axios.post(`https://localhost:5000/notes/update/${props.id}`, updatedNote)
+        axios.post(`http://localhost:5000/notes/update/${props.id}`, updatedNote)
             .then(res => {
                 console.log(res.data);
+            })
+            .catch(err => {
+                console.log(err)
             })
         setEditing(false);
     }
