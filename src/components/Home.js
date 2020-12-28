@@ -29,10 +29,11 @@ export default function Home() {
   }
 
   return (
-    <Container className="d-flex flex-column justify-content-center align-items-center">
-        <h3>HELLO HELLO HELLO WORLD</h3>
+    <Container style={{width: "90%", maxWidth:"800px"}} className="d-flex flex-column justify-content-center align-items-center">
+        <h6 style={{fontFamily:'Roboto Mono, monospace'}} className="mt-4 mb-4">🌎 HELLO HELLO HELLO WORLD 🌎</h6>
         <NoteCreator onUpdate={setUpdate}/>
         <NotesList notes={notes} handleDelete={deleteNote}/>
+        <a className="mb-4" href="https://github.com/cowjuh/stream-of-consciousness">Built by Jenny Zhang</a>
     </Container>
   );
 }
