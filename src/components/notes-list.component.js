@@ -4,7 +4,7 @@ import NoteCard from '../components/NoteCard';
 
 const Container = styled.div`
     max-width: 800px;
-    width: 90%;
+    width: 100%;
 `;
 
 export default function NotesList (props) {

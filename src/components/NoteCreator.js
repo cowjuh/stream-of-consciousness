@@ -6,7 +6,7 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
 const Container = styled.div`
     max-width: 800px;
-    width: 90%;
+    width: 100%;
 `;
 
 const NoteEditor = styled.form`
@@ -36,6 +36,9 @@ const TextArea = styled.textarea`
     box-sizing:border-box;
     -webkit-box-sizing: border-box;
     width: 100%;
+    @media(max-width: 768px){
+        min-height: 60vh;
+    }
 `;
 
 const Button = styled.button`

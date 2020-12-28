@@ -45,6 +45,9 @@ const InputField = styled.input`
     margin-bottom: 10px;
     min-width: 500px;
     width: 100%;
+    @media(max-width: 768px){
+        min-width: 0;
+    }
 `;
 
 const TextArea = styled.textarea`
@@ -56,6 +59,10 @@ const TextArea = styled.textarea`
     min-height: 150px;
     min-width: 500px;
     width: 100%;
+    @media(max-width: 768px){
+        min-width: 0;
+        min-height: 60vh;
+    }
 `;
 
 const Button = styled.button`
