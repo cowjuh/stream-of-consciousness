@@ -54,7 +54,7 @@ export default function Home() {
   return (
     <Container style={{width: "90%", maxWidth:"800px"}} className="d-flex flex-column justify-content-center align-items-center">
         <h6 style={{fontFamily:'Roboto Mono, monospace'}} className="mt-4 mb-4">🌎 HELLO HELLO HELLO WORLD 🌎</h6>
-        <InputField type="text" placeholder="Filter by tag" onChange={(e) => setFilter(e.target.value)}/>
+        {/* <InputField type="text" placeholder="Filter by tag" onChange={(e) => setFilter(e.target.value)}/> */}
         <NoteCreator onUpdate={setUpdate}/>
         {!dataLoaded ? <p>Loading...</p> :
           <NotesList notes={notes} handleDelete={deleteNote}/>

@@ -5,11 +5,12 @@ const path = require('path');
 const bodyParser = require('body-parser');
 require('dotenv').config();
 
+const app = express();
+
 const publicPath = path.join(__dirname, '../', '/build');
 const uri = process.env.ATLAS_URI;
 const notesRouter = require('./routes/notes');
 
-const app = express();
 const port = process.env.PORT || 5000;
 
 app.use(cors());
