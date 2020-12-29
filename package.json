@@ -13,6 +13,7 @@
     "body-parser": "^1.19.0",
     "bootstrap": "^4.5.3",
     "dayjs": "^1.9.8",
+    "dotenv": "^8.2.0",
     "draft-js": "^0.11.7",
     "marked": "^1.2.7",
     "path": "^0.12.7",
@@ -26,7 +27,7 @@
     "web-vitals": "^0.2.4"
   },
   "scripts": {
-    "start": "node backend/server.js",
+    "start": "nodemon backend/server.js",
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install && npm run build",
     "build": "react-scripts build",
     "test": "react-scripts test",

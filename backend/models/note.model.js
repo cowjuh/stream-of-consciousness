@@ -6,7 +6,8 @@ const noteSchema = new Schema({
     content: {type: String, required: true},
     tags: [{
         type: String,
-        required: false
+        required: false,
+        trim: true
     }]
 },
 {

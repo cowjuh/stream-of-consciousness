@@ -1,5 +1,8 @@
 import React, {useState, useEffect} from 'react';
 import { BrowserRouter as Router, Route } from "react-router-dom";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faFilter } from '@fortawesome/free-solid-svg-icons';
+import styled from 'styled-components';
 import Container from 'react-bootstrap/Container';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios';
@@ -7,16 +10,36 @@ import axios from 'axios';
 import NotesList from "./notes-list.component";
 import NoteCreator from "./NoteCreator";
 
+const InputField = styled.input`
+    border-radius: 3px;
+    border: none;
+    padding: 5px;
+    background-color: #f0f2f5;
+    margin-bottom: 10px;
+    width: 50%;
+    @media(max-width: 768px){
+        min-width: 0;
+    }
+`;
+
 export default function Home() {
   const [update, setUpdate] = useState();
   const [notes, setNotes] = useState();
+  const [filter, setFilter] = useState(null);
+  const [dataLoaded, setDataLoaded] = useState(false);
 
   useEffect(() => {
-      axios.get('/notes/')
-          .then(res => {
-              setNotes(res.data);
-          })
-          .catch(err => console.log(err));
+    var filtered;
+    axios.get('/notes/')
+        .then(res => {
+            if(filter != null) {
+              filtered = res.data.filter(note => note.tags.includes(filter));
+            }
+            else {filtered = res.data}
+            setNotes(filtered);
+            setDataLoaded(true);
+        })
+        .catch(err => console.log(err));
   })
 
   const deleteNote = (id) => {
@@ -31,8 +54,11 @@ export default function Home() {
   return (
     <Container style={{width: "90%", maxWidth:"800px"}} className="d-flex flex-column justify-content-center align-items-center">
         <h6 style={{fontFamily:'Roboto Mono, monospace'}} className="mt-4 mb-4">🌎 HELLO HELLO HELLO WORLD 🌎</h6>
+        <InputField type="text" placeholder="Filter by tag" onChange={(e) => setFilter(e.target.value)}/>
         <NoteCreator onUpdate={setUpdate}/>
-        <NotesList notes={notes} handleDelete={deleteNote}/>
+        {!dataLoaded ? <p>Loading...</p> :
+          <NotesList notes={notes} handleDelete={deleteNote}/>
+        }
         <a className="mb-4" href="https://github.com/cowjuh/stream-of-consciousness">Built by Jenny Zhang</a>
     </Container>
   );
