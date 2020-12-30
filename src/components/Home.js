@@ -56,9 +56,9 @@ export default function Home() {
         <h6 style={{fontFamily:'Roboto Mono, monospace'}} className="mt-4 mb-4">🌎 HELLO HELLO HELLO WORLD 🌎</h6>
         {/* <InputField type="text" placeholder="Filter by tag" onChange={(e) => setFilter(e.target.value)}/> */}
         <NoteCreator onUpdate={setUpdate}/>
-        {!dataLoaded ? <p>Loading...</p> :
+        {/* {!dataLoaded ? <p>Loading...</p> :
           <NotesList notes={notes} handleDelete={deleteNote}/>
-        }
+        } */}
         <a className="mb-4" href="https://github.com/cowjuh/stream-of-consciousness">Built by Jenny Zhang</a>
     </Container>
   );
