@@ -35,7 +35,7 @@ export default function Home() {
             setDataLoaded(true);
         })
         .catch(err => console.log(err));
-  })
+  }, [])
 
   const deleteNote = (id) => {
     axios.delete(`notes/${id}`)
