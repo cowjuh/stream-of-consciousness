@@ -28,7 +28,8 @@
     "web-vitals": "^0.2.4"
   },
   "scripts": {
-    "start": "concurrently \"node backend\" \"react-scripts start\"",
+    "start": "node backend",
+    "dev": "react-scripts start",
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install && npm run build",
     "build": "react-scripts build",
     "test": "react-scripts test",
