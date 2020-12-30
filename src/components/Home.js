@@ -29,14 +29,9 @@ export default function Home() {
   const [dataLoaded, setDataLoaded] = useState(false);
 
   useEffect(() => {
-    var filtered;
     axios.get('/notes/')
         .then(res => {
-            if(filter != null) {
-              filtered = res.data.filter(note => note.tags.includes(filter));
-            }
-            else {filtered = res.data}
-            setNotes(filtered);
+            setNotes(res.data);
             setDataLoaded(true);
         })
         .catch(err => console.log(err));
@@ -56,9 +51,9 @@ export default function Home() {
         <h6 style={{fontFamily:'Roboto Mono, monospace'}} className="mt-4 mb-4">🌎 HELLO HELLO HELLO WORLD 🌎</h6>
         {/* <InputField type="text" placeholder="Filter by tag" onChange={(e) => setFilter(e.target.value)}/> */}
         <NoteCreator onUpdate={setUpdate}/>
-        {/* {!dataLoaded ? <p>Loading...</p> :
+        {!dataLoaded ? <p>Loading...</p> :
           <NotesList notes={notes} handleDelete={deleteNote}/>
-        } */}
+        }
         <a className="mb-4" href="https://github.com/cowjuh/stream-of-consciousness">Built by Jenny Zhang</a>
     </Container>
   );
