@@ -2,9 +2,16 @@ const router = require('express').Router();
 let Note = require('../models/note.model');
 
 router.route('/').get((req, res) => {
-    Note.find()
-    .then(notes => res.json(notes))
-    .catch(err => res.status(400).json('Error: ' + err));
+  Note.find()
+  .then(notes => res.json(notes))
+  .catch(err => res.status(400).json('Error: ' + err));    
+});
+
+router.route('/filterByTag').get((req, res) => {
+  let queryTag = req.query.tag;
+  Note.find({tags: { $regex : new RegExp(queryTag, "i") } })
+  .then(notes => res.json(notes))
+  .catch(err => res.status(400).json('Error: ' + err));
 });
 
 router.route('/add').post((req, res) => {

@@ -16,7 +16,7 @@ const InputField = styled.input`
     padding: 5px;
     background-color: #f0f2f5;
     margin-bottom: 10px;
-    width: 50%;
+    width: 100%;
     @media(max-width: 768px){
         min-width: 0;
     }
@@ -35,7 +35,7 @@ export default function Home() {
             setDataLoaded(true);
             setUpdate(false);
         })
-        .catch(err => console.log(err));      
+        .catch(err => console.log(err));        
   }, [update])
 
   const deleteNote = (id) => {
@@ -47,10 +47,21 @@ export default function Home() {
     setNotes(newNotes);
   }
 
+  const handleFilter = (e) => {
+    e.preventDefault();
+    axios.get(`notes/filterByTag/?tag=${filter}`)
+      .then(res => {
+        setNotes(res.data);
+      })
+      .catch(err => console.log(err));
+  }
+
   return (
     <Container style={{width: "90%", maxWidth:"800px"}} className="d-flex flex-column justify-content-center align-items-center">
         <h6 style={{fontFamily:'Roboto Mono, monospace'}} className="mt-4 mb-4">🌎 HELLO HELLO HELLO WORLD 🌎</h6>
-        {/* <InputField type="text" placeholder="Filter by tag" onChange={(e) => setFilter(e.target.value)}/> */}
+        <form onSubmit={handleFilter}>
+          <InputField type="text" placeholder="Filter by tag" onChange={(e) => setFilter(e.target.value)}/>
+        </form>
         <NoteCreator onUpdate={() => setUpdate(true)}/>
         {!dataLoaded ? <p>Loading...</p> :
           <NotesList notes={notes} handleDelete={deleteNote}/>
