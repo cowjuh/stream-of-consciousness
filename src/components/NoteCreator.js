@@ -58,7 +58,10 @@ export default function NoteCreator(props){
 
     const onSubmit = (e) => {
         e.preventDefault();
-        let tagArray = (tags.split(",")).filter(i => /\S/.test(i));
+        let tagArray = null;
+        if (tags) {
+            tagArray = (tags.split(",")).filter(i => /\S/.test(i));
+        }
         const newNote = {
             title: title,
             content: content,

@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFilter } from '@fortawesome/free-solid-svg-icons';
@@ -33,9 +33,10 @@ export default function Home() {
         .then(res => {
             setNotes(res.data);
             setDataLoaded(true);
+            setUpdate(false);
         })
-        .catch(err => console.log(err));
-  }, [])
+        .catch(err => console.log(err));      
+  }, [update])
 
   const deleteNote = (id) => {
     axios.delete(`notes/${id}`)
@@ -50,7 +51,7 @@ export default function Home() {
     <Container style={{width: "90%", maxWidth:"800px"}} className="d-flex flex-column justify-content-center align-items-center">
         <h6 style={{fontFamily:'Roboto Mono, monospace'}} className="mt-4 mb-4">🌎 HELLO HELLO HELLO WORLD 🌎</h6>
         {/* <InputField type="text" placeholder="Filter by tag" onChange={(e) => setFilter(e.target.value)}/> */}
-        <NoteCreator onUpdate={setUpdate}/>
+        <NoteCreator onUpdate={() => setUpdate(true)}/>
         {!dataLoaded ? <p>Loading...</p> :
           <NotesList notes={notes} handleDelete={deleteNote}/>
         }
