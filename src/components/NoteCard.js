@@ -81,6 +81,8 @@ const NoteCard = (props) => {
     const [content, setContent] = useState(props.content);
     const [tags, setTags] = useState(props.tags);
     const [stringTags, setStringTags] = useState();
+    const [deleteCard, setDeleteCard] = useState(false);
+    const [inputPassword, setInputPassword] = useState();
     var createdAt = (new Date(props.createdAt)).toDateString();
     var updatedAt = (new Date(props.updatedAt)).toDateString();
     dayjs.extend(relativeTime);
@@ -130,7 +132,12 @@ const NoteCard = (props) => {
                         </div>
                     }
                     <div className="d-flex align-items-center">
-                        <FontAwesomeIcon icon={faTrash} className="mr-2" color="gray" onClick={() => props.handleDelete(props.id)} cursor="pointer"/>                
+                        <FontAwesomeIcon icon={faTrash} className="mr-2" color="gray" onClick={() => setDeleteCard(!deleteCard)} cursor="pointer"/> 
+                        {deleteCard
+                            ? <form onSubmit={inputPassword === "del" ? () => props.handleDelete(props.id) : () => setDeleteCard(false)}>
+                                <input placeholder="Password" onChange={(e) => setInputPassword(e.target.value)}/>
+                            </form>
+                            : null}
                         <FontAwesomeIcon icon={faPencilAlt} color="gray" onClick={() => setEditing(!editing)} cursor="pointer"/>
                         {props.createdAt != props.updatedAt ? <p style={{color: "gray"}} className="m-0 ml-2">{lastUpdated}</p> : null}
                     </div>
