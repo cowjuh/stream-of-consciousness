@@ -85,6 +85,7 @@ const NoteCard = (props) => {
     var updatedAt = (new Date(props.updatedAt)).toDateString();
     dayjs.extend(relativeTime);
     var lastUpdated = dayjs().to(props.updatedAt);
+    var lastCreated = dayjs().to(props.createdAt);
 
     const onSubmit = (e) => {
         e.preventDefault();
@@ -117,7 +118,7 @@ const NoteCard = (props) => {
             {!editing
                 ? <React.Fragment>
                     <h2>{title}</h2>
-                    <p>{createdAt}</p>
+                    <p style={{color: "gray"}}>{lastCreated}</p>
                     <NotePreview content={content}/>
                     {!tags ? null : 
                         <div className="mb-4">{                
@@ -128,7 +129,6 @@ const NoteCard = (props) => {
                             })}
                         </div>
                     }
-                    {/* <FontAwesomeIcon icon={faClipboard} color="gray"/> */}
                     <div className="d-flex align-items-center">
                         <FontAwesomeIcon icon={faTrash} className="mr-2" color="gray" onClick={() => props.handleDelete(props.id)} cursor="pointer"/>                
                         <FontAwesomeIcon icon={faPencilAlt} color="gray" onClick={() => setEditing(!editing)} cursor="pointer"/>

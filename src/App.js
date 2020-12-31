@@ -5,7 +5,7 @@ import Container from 'react-bootstrap/Container';
 import RichTextEditor from "./components/RichTextEditor";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import NotesList from "./components/notes-list.component";
+import NotesList from "./components/NotesList";
 import NoteCreator from "./components/NoteCreator";
 import Home from './components/Home';
 

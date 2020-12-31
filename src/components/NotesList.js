@@ -1,6 +1,6 @@
 import React, {useState, useEffect } from 'react';
 import styled from 'styled-components';
-import NoteCard from '../components/NoteCard';
+import NoteCard from './NoteCard';
 
 const Container = styled.div`
     max-width: 800px;
