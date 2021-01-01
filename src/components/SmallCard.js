@@ -7,29 +7,27 @@ import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
+import {Link} from 'react-router-dom';
+import Tag from './Atoms/Tag';
+import Flair from './Atoms/Flair';
 
 const Card = styled.div`
+    position: relative;
     cursor: pointer;
-    background-color: #f0f2f5;
+    background-color: #F9F9F9;
     border: none;
     border-radius: 5px;
     padding: 20px;
-    min-width: 300px;
-    min-height: 200px;
+    min-width: 250px;
+    min-height: 250px;
+
+    @media(max-width: 768px){
+        min-width: 0;
+    }
 
     :hover {
         transform: scale(1.02);
     }
-`;
-
-const Tag = styled.div`
-    display: inline-block;
-    background-color: black;
-    color: white;
-    border-radius: 5px;
-    padding: 2px 8px;
-    margin-right: 5px;
-    margin-bottom: 5px;
 `;
 
 const Container = styled.div`
@@ -71,27 +69,46 @@ const TextArea = styled.textarea`
     }
 `;
 
-const Button = styled.button`
-    display: inline-block;
-    text-align: center;
-    border-radius: 5px;
-    border: none;
-    background-color: black;
-    padding: 5px 20px;
-    color: white;
+const StyledLink = styled(Link)`
+    text-decoration: none;
+    color: inherit;
+
+    &:focus, &:hover, &:visited, &:link, &:active {
+        text-decoration: none;
+        color: inherit;
+    }
 `;
 
 const CardDetails = styled.div`
     visibility: ${props => props.visible ? "visible" : "hidden"};
 `;
 
+const ContentPreview = styled.div`
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;  
+`;
+
+const TagsContainer = styled.div`
+    display: inline-block;
+    width: 100%;
+    padding: 60px 20px 5px 20px;
+    position: absolute;
+    left: 0px;
+    bottom: 0px;
+    background-image: linear-gradient(rgba(249,249,249,0), rgba(249,249,249,1) ,rgba(249,249,249,1));
+`;
+
 const SmallCard = (props) => {
     const [editing, setEditing] = useState(false);
     const [title, setTitle] = useState(props.title);
     const [content, setContent] = useState(props.content);
+    const [category, setCategory] = useState(props.category);
     const [tags, setTags] = useState(props.tags);
     const [stringTags, setStringTags] = useState();
     const [hover, setHover] = useState(false);
+    const id = props.id;
     var createdAt = (new Date(props.createdAt)).toDateString();
     var updatedAt = (new Date(props.updatedAt)).toDateString();
     dayjs.extend(relativeTime);
@@ -125,30 +142,28 @@ const SmallCard = (props) => {
     }
 
     return(
-        <Card onMouseOver={() => setHover(true)} onMouseLeave={() => setHover(false)}>
-            <React.Fragment>
-                <div className="d-flex justify-content-between mb-2">
-                    <p className="m-0" style={{color: "gray"}}>{lastCreated}</p>
-                    <CardDetails visible={hover ? true : false} className="d-flex align-items-center">
-                        <FontAwesomeIcon icon={faTrash} className="mr-2" color="gray" onClick={() => props.handleDelete(props.id)} cursor="pointer"/>                
-                        <FontAwesomeIcon icon={faPencilAlt} color="gray" onClick={() => setEditing(!editing)} cursor="pointer"/>
-                        {/* {props.createdAt != props.updatedAt 
-                            ? <p style={{color: "gray"}} className="m-0 ml-2">{lastUpdated}</p>
-                            : null
-                        } */}
-                    </CardDetails>                    
-                </div>
-
-                <h4>{title}</h4>
-                {!tags ? null : 
-                    <div className="mb-4">{                
-                        tags.map((tag) => {
-                            return <Tag>{tag}</Tag>
-                        })}
+        <StyledLink style={{textDecoration: 'none'}} to={`/note/${id}`}>
+            <Card onMouseOver={() => setHover(true)} onMouseLeave={() => setHover(false)}>
+                <React.Fragment>
+                    <div className="d-flex justify-content-between mb-2">
+                        <p className="m-0" style={{color: "gray"}}>{lastCreated}</p>
+                        {!category ? null : <Flair value={category}/>}
                     </div>
-                }
-            </React.Fragment>
-        </Card>
+
+                    <h4>{title}</h4>
+                    <ContentPreview>{content}</ContentPreview>
+                    {!tags || !hover ? null : 
+                        <TagsContainer className="mb-4">{                
+                            tags.map((tag) => {
+                                return <Tag value={tag}/>
+                            })}
+                        </TagsContainer>
+                    }
+                </React.Fragment>
+            </Card>
+
+        </StyledLink>
+
     )
 }
 
