@@ -9,7 +9,7 @@ import {getAllNotes, getAllTags} from '../utils/api';
 const SidebarContainer = styled.div`
     height: 100vh;
     width: 250px;
-    padding: 20px;
+    padding: 30px;
     position: fixed;
     background-color: white;
     z-index: 1;
@@ -21,52 +21,81 @@ const SidebarContainer = styled.div`
     }
 `
 const SidebarSection = styled.div`
-    margin-top: 30px;
+    margin-bottom: 20px;
 `;
 
-const ListItem = styled.div`
+const ListText = styled.div`
     cursor: pointer;
-    width: 250px;
-    height: 50px;
-    padding: 10px 0px;
+    padding: 5px 0px;
     overflow: hidden; 
-    border-bottom: 1px solid #E6E6E6;
-    border-top: 1px solid #E6E6E6;
     margin-top: -1px;
     text-overflow: ellipsis;
     white-space: nowrap;
-    color: gray;
+    font-weight: 600;
+    color: #555555;
 
     :hover {
-        color: #333333;
+        color: #000000;
+    }
+`;
+
+const SectionText = styled.h5`
+    margin-top: 20px;
+    text-transform: uppercase;
+    font-size: 12px;
+    color: gray;
+`;
+
+const StyledLink = styled(Link)`
+    text-decoration: none;
+    color: inherit;
+
+    &:focus, &:hover, &:visited, &:link, &:active {
+        text-decoration: none;
+        color: inherit;
     }
 `;
 
 const Sidebar = (props) => {
     const tags = props.tags;
     const notes = props.notes;
-    // const [tags, setTags] = useState();
-    // const [notes, setNotes] = useState();
+    const categories = props.categories;
     const [active, setActive] = useState();
 
     return(
         <SidebarContainer>
-            <Button value="New Note"/>
             <SidebarSection>
-                <Link to={{ pathname: `/`}}>All Notes</Link>
-                <h5>Recent Notes</h5>
+                <StyledLink to={{pathname: `/`}}>
+                    <h2>🖋️Jot.</h2>
+                    <a href="https://github.com/cowjuh/stream-of-consciousness">By Jenny Zhang</a>
+                </StyledLink>
+            </SidebarSection>
+            <SidebarSection>
+                <Button value="New Note"/>
+            </SidebarSection>
+            <SidebarSection>
+                <SectionText>CATEGORIES</SectionText> 
+                {!categories ? null : categories.map((category) => {
+                    return (
+                        <StyledLink to={{ pathname: `/category/${category}`}}>
+                            <ListText>{category}</ListText>                        
+                        </StyledLink>
+                    )
+                })}  
+            </SidebarSection>
+            <SidebarSection>
+                {/* <Link to={{ pathname: `/`}}>All Notes</Link> */}
+                <SectionText>RECENT</SectionText>
                 {!notes ? null : notes.slice(0).reverse().slice(0, 8).map((note) => {
                     return (
-                        <Link to={{ pathname: `/note/${note._id}`}}>
-                            <ListItem>
-                                {note.title}
-                            </ListItem>                        
-                        </Link>
+                        <StyledLink to={{ pathname: `/note/${note._id}`}}>
+                            <ListText>{note.title}</ListText>                        
+                        </StyledLink>
                     )
                 })}                
             </SidebarSection>
             <SidebarSection>
-                <h5>All Tags</h5>
+                <SectionText>All Tags</SectionText>
                 {!tags ? null : tags.map((tag) => {
                     return <Tag key={tag.id} onClick={() => console.log("Clicked tag: ", tag)} value={tag}/>
                 })}                
