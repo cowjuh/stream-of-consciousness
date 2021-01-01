@@ -61,6 +61,7 @@ const Sidebar = (props) => {
     const notes = props.notes;
     const categories = props.categories;
     const [active, setActive] = useState();
+    const [recentExpanded, setRecentExpanded] = useState(5);
 
     return(
         <SidebarContainer>
@@ -86,13 +87,21 @@ const Sidebar = (props) => {
             <SidebarSection>
                 {/* <Link to={{ pathname: `/`}}>All Notes</Link> */}
                 <SectionText>RECENT</SectionText>
-                {!notes ? null : notes.slice(0).reverse().slice(0, 8).map((note) => {
+                {!notes ? null : notes.slice(0).reverse().slice(0, recentExpanded).map((note) => {
                     return (
                         <StyledLink to={{ pathname: `/note/${note._id}`}}>
                             <ListText>{note.title}</ListText>                        
                         </StyledLink>
                     )
                 })}                
+                <a 
+                    style={{cursor: "pointer"}}
+                    className="link"
+                    onClick={() => {
+                        recentExpanded === 5 ? setRecentExpanded(notes.length) : setRecentExpanded(8)
+                    }}>
+                    {recentExpanded === 5 ? "Show more..." : "Show less..."}
+                </a>
             </SidebarSection>
             <SidebarSection>
                 <SectionText>All Tags</SectionText>
