@@ -8,10 +8,25 @@ router.route('/').get((req, res) => {
 });
 
 router.route('/filterByTag').get((req, res) => {
-  let queryTag = req.query.tag;
-  Note.find({tags: { $regex : new RegExp(queryTag, "i") } })
+  let queryString = req.query.tag;
+  let filter;
+  {queryString ? filter=queryString.split(',') : queryArray= ""}
+  if (queryString.length != 0) {
+    Note.find({tags: {$all: filter} })
+    .then(notes => res.json(notes))
+    .catch(err => res.status(400).json('Error: ' + err));    
+  }
+  else {
+    Note.find()
+    .then(notes => res.json(notes))
+    .catch(err => res.status(400).json('Error: ' + err)); 
+  }
+});
+
+router.route('/tags').get((req, res) => {
+  Note.distinct("tags")
   .then(notes => res.json(notes))
-  .catch(err => res.status(400).json('Error: ' + err));
+  .catch(err => res.status(400).json('Error: ' + err));    
 });
 
 router.route('/add').post((req, res) => {
@@ -32,15 +47,15 @@ router.route('/add').post((req, res) => {
   .catch(err => res.status(400).json('Error: ' + err));
 });
 
-router.route('/:id').get((req, res) => {
-    Note.findById(req.params.id)
-      .then(note => res.json(note))
-      .catch(err => res.status(400).json('Error: ' + err));
-});
-
 router.route('/:id').delete((req, res) => {
 Note.findByIdAndDelete(req.params.id)
     .then(() => res.json('Note deleted.'))
+    .catch(err => res.status(400).json('Error: ' + err));
+});
+
+router.route('/:id').get((req, res) => {
+  Note.findById(req.params.id)
+    .then(note => res.json(note))
     .catch(err => res.status(400).json('Error: ' + err));
 });
 

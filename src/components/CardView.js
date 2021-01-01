@@ -5,6 +5,7 @@ import SmallCard from './SmallCard';
 const Container = styled.div`
     display: grid;
     grid-template-columns: repeat(auto-fill,minmax(300px, 1fr));
+    gap: 1rem;
     max-width: 800px;
     width: 100%;
 `;

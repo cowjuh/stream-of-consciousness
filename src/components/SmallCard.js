@@ -14,9 +14,8 @@ const Card = styled.div`
     border: none;
     border-radius: 5px;
     padding: 20px;
-    margin: 0px 20px 20px 0px;
     min-width: 300px;
-    min-height: 100px;
+    min-height: 200px;
 
     :hover {
         transform: scale(1.02);
@@ -128,8 +127,19 @@ const SmallCard = (props) => {
     return(
         <Card onMouseOver={() => setHover(true)} onMouseLeave={() => setHover(false)}>
             <React.Fragment>
+                <div className="d-flex justify-content-between mb-2">
+                    <p className="m-0" style={{color: "gray"}}>{lastCreated}</p>
+                    <CardDetails visible={hover ? true : false} className="d-flex align-items-center">
+                        <FontAwesomeIcon icon={faTrash} className="mr-2" color="gray" onClick={() => props.handleDelete(props.id)} cursor="pointer"/>                
+                        <FontAwesomeIcon icon={faPencilAlt} color="gray" onClick={() => setEditing(!editing)} cursor="pointer"/>
+                        {/* {props.createdAt != props.updatedAt 
+                            ? <p style={{color: "gray"}} className="m-0 ml-2">{lastUpdated}</p>
+                            : null
+                        } */}
+                    </CardDetails>                    
+                </div>
+
                 <h4>{title}</h4>
-                <p style={{color: "gray"}}>{lastCreated}</p>
                 {!tags ? null : 
                     <div className="mb-4">{                
                         tags.map((tag) => {
@@ -137,14 +147,6 @@ const SmallCard = (props) => {
                         })}
                     </div>
                 }
-                <CardDetails visible={hover ? true : false} className="d-flex align-items-center">
-                    <FontAwesomeIcon icon={faTrash} className="mr-2" color="gray" onClick={() => props.handleDelete(props.id)} cursor="pointer"/>                
-                    <FontAwesomeIcon icon={faPencilAlt} color="gray" onClick={() => setEditing(!editing)} cursor="pointer"/>
-                    {props.createdAt != props.updatedAt 
-                        ? <p style={{color: "gray"}} className="m-0 ml-2">{lastUpdated}</p>
-                        : null
-                    }
-                </CardDetails>
             </React.Fragment>
         </Card>
     )

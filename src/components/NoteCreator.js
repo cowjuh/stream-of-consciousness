@@ -3,6 +3,7 @@ import axios from 'axios';
 import styled from 'styled-components';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import Button from './Atoms/Button';
 
 const Container = styled.div`
     max-width: 800px;
@@ -41,15 +42,6 @@ const TextArea = styled.textarea`
     }
 `;
 
-const Button = styled.button`
-    display: inline-block;
-    text-align: center;
-    border-radius: 5px;
-    border: none;
-    background-color: black;
-    padding: 5px 20px;
-    color: white;
-`;
 export default function NoteCreator(props){
     const [title, setTitle] = useState();
     const [content, setContent] = useState();
@@ -81,7 +73,7 @@ export default function NoteCreator(props){
     return (
       <Container>
         {!open
-            ? <Button onClick={() => setOpen(true)} style={{marginBottom: "20px"}}>New Note</Button>
+            ? <Button value="New Note" onClick={() => setOpen(true)} style={{marginBottom: "20px"}}/>
             : <div>
                 <FontAwesomeIcon icon={faTimes} onClick={() => setOpen(false)}/>
                 <h2>New Note</h2>
@@ -89,7 +81,7 @@ export default function NoteCreator(props){
                     <InputField type="text" placeholder="Title" onChange={(e) => setTitle(e.target.value)} value={title}/>
                     <TextArea type="text" placeholder="Content" onChange={(e) => setContent(e.target.value)} value={content}/>
                     <InputField type="text" required={false} placeholder="Tags (Optional)" onChange={(e) => setTags(e.target.value)} value={tags}/>
-                    <Button type="submit" placeholder="Submit">Submit</Button>
+                    <Button value="Submit" type="submit" placeholder="Submit"/>
                 </NoteEditor>                
             </div>
         }   

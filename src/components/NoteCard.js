@@ -7,6 +7,8 @@ import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
+import Tag from './Atoms/Tag';
+import Button from './Atoms/Button';
 
 const Card = styled.div`
     background-color: #f0f2f5;
@@ -15,15 +17,6 @@ const Card = styled.div`
     padding: 20px;
     margin-bottom: 20px;
     width: 100%;
-`;
-
-const Tag = styled.div`
-    display: inline-block;
-    background-color: black;
-    color: white;
-    border-radius: 5px;
-    padding: 2px 8px;
-    margin-right: 5px;
 `;
 
 const Container = styled.div`
@@ -56,23 +49,13 @@ const TextArea = styled.textarea`
     padding: 5px;
     margin-bottom: 10px;
     background-color: white;
-    min-height: 150px;
+    min-height: 300px;
     min-width: 500px;
     width: 100%;
     @media(max-width: 768px){
         min-width: 0;
         min-height: 60vh;
     }
-`;
-
-const Button = styled.button`
-    display: inline-block;
-    text-align: center;
-    border-radius: 5px;
-    border: none;
-    background-color: black;
-    padding: 5px 20px;
-    color: white;
 `;
 
 const NoteCard = (props) => {
@@ -119,14 +102,14 @@ const NoteCard = (props) => {
         <Card>
             {!editing
                 ? <React.Fragment>
-                    <h2>{title}</h2>
                     <p style={{color: "gray"}}>{lastCreated}</p>
+                    <h2>{title}</h2>
                     <NotePreview content={content}/>
                     {!tags ? null : 
                         <div className="mb-4">{                
                             tags.map((tag) => {
                                 return(
-                                    <Tag>{tag}</Tag>
+                                    <Tag value={tag}/>
                                 )
                             })}
                         </div>
@@ -147,7 +130,11 @@ const NoteCard = (props) => {
                         <InputField placeholder="Title" defaultValue={props.title} onChange={(e) => setTitle(e.target.value)} value={title}/>
                         <TextArea placeholder="Content" defaultValue={props.content} onChange={(e) => setContent(e.target.value)} value={content}/>
                         <InputField placeholder="Tags (optional)" defaultValue={props.tags} onChange={(e) => setStringTags(e.target.value)} value={stringTags}/>
-                        <Button type="submit">Update</Button>
+                        <div className="d-flex align-items-center">
+                            <Button value="Update" className="mr-2" type="submit"/>
+                            <p style={{cursor: "pointer"}} onClick={() => setEditing(false)} className="m-0">Cancel</p>                            
+                        </div>
+
                     </NoteEditor>
                 </Container> 
                 }
