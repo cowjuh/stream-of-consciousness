@@ -23,3 +23,15 @@ export function getNoteByID(id) {
     .then((res) => {return res.data})
     .catch(err => console.log(err));
 }
+
+export function getAllCategories() {
+    return axios.get(`notes/categories`)
+    .then((res) => {return res.data})
+    .catch(err => console.log(err));
+}
+
+export function getCategoryNotes(category) {
+    return axios.get(`notes/categories/${category}`)
+    .then((res) => {return res.data})
+    .catch(err => console.log(err));
+}

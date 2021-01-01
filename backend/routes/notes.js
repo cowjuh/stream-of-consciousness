@@ -29,15 +29,29 @@ router.route('/tags').get((req, res) => {
   .catch(err => res.status(400).json('Error: ' + err));    
 });
 
+router.route('/categories').get((req, res) => {
+  Note.distinct("category")
+  .then(notes => res.json(notes))
+  .catch(err => res.status(400).json('Error: ' + err));    
+});
+
+router.route('/categories/:category').get((req, res) => {
+  Note.find({category: req.params.category})
+  .then(notes => res.json(notes))
+  .catch(err => res.status(400).json('Error: ' + err));    
+});
+
 router.route('/add').post((req, res) => {
   const title = req.body.title;
   const content = req.body.content;
+  const category = req.body.category;
   const tags = req.body.tags;
   const date = Date.parse(req.body.date);
 
   const newNote = new Note({
     title,
     content,
+    category,
     tags,
     date,
   });
@@ -64,6 +78,7 @@ Note.findById(req.params.id)
     .then(note => {
     note.title = req.body.title;
     note.content = req.body.content;
+    note.category = req.body.category;
     note.tags = req.body.tags;
     note.date = Date.parse(req.body.date);
 
