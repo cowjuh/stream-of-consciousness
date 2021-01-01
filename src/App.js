@@ -24,7 +24,7 @@ function App() {
 
       getAllCategories()
       .then(res => setCategories(res));
-  }, [notes])
+  }, [])
 
   return (
     <Router>
