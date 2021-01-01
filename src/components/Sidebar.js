@@ -71,9 +71,9 @@ const Sidebar = (props) => {
                     <a href="https://github.com/cowjuh/stream-of-consciousness">By Jenny Zhang</a>
                 </StyledLink>
             </SidebarSection>
-            <SidebarSection>
+            {/* <SidebarSection>
                 <Button value="New Note"/>
-            </SidebarSection>
+            </SidebarSection> */}
             <SidebarSection>
                 <SectionText>CATEGORIES</SectionText> 
                 {!categories ? null : categories.map((category) => {
@@ -98,9 +98,9 @@ const Sidebar = (props) => {
                     style={{cursor: "pointer"}}
                     className="link"
                     onClick={() => {
-                        recentExpanded === 5 ? setRecentExpanded(notes.length) : setRecentExpanded(8)
+                        recentExpanded === 5 ? setRecentExpanded(notes.length) : setRecentExpanded(5)
                     }}>
-                    {recentExpanded === 5 ? "Show more..." : "Show less..."}
+                    {recentExpanded === 5 ? "Show all..." : "Show less..."}
                 </a>
             </SidebarSection>
             <SidebarSection>
