@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import NoteCard from './NoteCard';
 
 const Container = styled.div`
-    max-width: 800px;
     width: 100%;
 `;
 
@@ -18,6 +17,7 @@ export default function NotesList (props) {
                     id={note._id}
                     title={note.title}
                     content={note.content}
+                    category={note.category}
                     tags={note.tags? note.tags : null}
                     createdAt={note.createdAt}
                     updatedAt={note.updatedAt}

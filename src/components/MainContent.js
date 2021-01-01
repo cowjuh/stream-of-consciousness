@@ -72,13 +72,13 @@ export default function MainContent() {
   }
 
   return (
-    <Container style={{width: "90%", maxWidth:"800px"}} className="d-flex flex-column justify-content-center align-items-center">
-        <h6 style={{fontFamily:'Roboto Mono, monospace'}} className="mt-4 mb-4">🌎 HELLO HELLO HELLO WORLD 🌎</h6>
+    <Container className="px-4 d-flex flex-column justify-content-center align-items-center">
+        {/* <h6 style={{fontFamily:'Roboto Mono, monospace'}} className="mt-4 mb-4">🌎 HELLO HELLO HELLO WORLD 🌎</h6> */}
         <Configurable>
-          <form onSubmit={handleFilter} className="mr-4">
+          <form onSubmit={handleFilter} className="mt-4">
             <InputField type="text" placeholder="Filter by tag" onChange={(e) => setFilter(e.target.value)}/>
           </form>
-          <ViewIcon
+          {/* <ViewIcon
             onClick={() => setView("list")}
             className="mr-4"
             icon={faThList}
@@ -86,15 +86,10 @@ export default function MainContent() {
           <ViewIcon
             onClick={() => setView("card")}
             icon={faThLarge}
-          />
+          /> */}
         </Configurable>
         <NoteCreator onUpdate={() => setUpdate(true)}/>
-        {!dataLoaded ? <p>Loading...</p> :
-          view == "list"
-            ? <NotesList notes={notes} handleDelete={deleteNote}/>
-            : <CardView notes={notes} handleDelete={deleteNote}/>
-        }
-        <a className="mb-4" href="https://github.com/cowjuh/stream-of-consciousness">Built by Jenny Zhang</a>
+        <CardView notes={notes} handleDelete={deleteNote}/>
     </Container>
   );
 }

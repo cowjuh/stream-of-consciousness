@@ -6,7 +6,6 @@ import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import Button from './Atoms/Button';
 
 const Container = styled.div`
-    max-width: 800px;
     width: 100%;
 `;
 
@@ -45,6 +44,7 @@ const TextArea = styled.textarea`
 export default function NoteCreator(props){
     const [title, setTitle] = useState();
     const [content, setContent] = useState();
+    const [category, setCategory] = useState();
     const [tags, setTags] = useState();
     const [open, setOpen] = useState(false);
 
@@ -57,6 +57,7 @@ export default function NoteCreator(props){
         const newNote = {
             title: title,
             content: content,
+            category: category,
             tags: tagArray
         }
         axios.post('/notes/add', newNote)
@@ -64,6 +65,7 @@ export default function NoteCreator(props){
                 console.log(res.data);
                 setTitle("");
                 setContent("");
+                setCategory("");
                 setTags("");
             });
         setOpen(false);
@@ -79,6 +81,7 @@ export default function NoteCreator(props){
                 <h2>New Note</h2>
                 <NoteEditor onSubmit={onSubmit}>
                     <InputField type="text" placeholder="Title" onChange={(e) => setTitle(e.target.value)} value={title}/>
+                    <InputField type="text" placeholder="Category" onChange={(e) => setCategory(e.target.value)} value={category}/>
                     <TextArea type="text" placeholder="Content" onChange={(e) => setContent(e.target.value)} value={content}/>
                     <InputField type="text" required={false} placeholder="Tags (Optional)" onChange={(e) => setTags(e.target.value)} value={tags}/>
                     <Button value="Submit" type="submit" placeholder="Submit"/>

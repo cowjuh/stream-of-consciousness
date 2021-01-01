@@ -8,10 +8,11 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import Tag from './Atoms/Tag';
+import Flair from './Atoms/Flair';
 import Button from './Atoms/Button';
 
 const Card = styled.div`
-    background-color: #f0f2f5;
+    background-color: #F9F9F9;
     border: none;
     border-radius: 5px;
     padding: 20px;
@@ -62,6 +63,7 @@ const NoteCard = (props) => {
     const [editing, setEditing] = useState(false);
     const [title, setTitle] = useState(props.title);
     const [content, setContent] = useState(props.content);
+    const [category, setCategory] = useState(props.category);
     const [tags, setTags] = useState(props.tags);
     const [stringTags, setStringTags] = useState();
     const [deleteCard, setDeleteCard] = useState(false);
@@ -85,6 +87,7 @@ const NoteCard = (props) => {
         const updatedNote = {
             title: title,
             content: content,
+            category: category,
             tags: tagArray
         }
         console.log(updatedNote);
@@ -103,6 +106,7 @@ const NoteCard = (props) => {
             {!editing
                 ? <React.Fragment>
                     <p style={{color: "gray"}}>{lastCreated}</p>
+                    {!category ? <p style={{color: "gray"}}>No Category</p> : <Flair value={category}/>}
                     <h2>{title}</h2>
                     <NotePreview content={content}/>
                     {!tags ? null : 
@@ -128,6 +132,7 @@ const NoteCard = (props) => {
                 : <Container>
                     <NoteEditor onSubmit={onSubmit}>
                         <InputField placeholder="Title" defaultValue={props.title} onChange={(e) => setTitle(e.target.value)} value={title}/>
+                        <InputField placeholder="Category" defaultValue={props.category} onChange={(e) => setCategory(e.target.value)} value={category}/>
                         <TextArea placeholder="Content" defaultValue={props.content} onChange={(e) => setContent(e.target.value)} value={content}/>
                         <InputField placeholder="Tags (optional)" defaultValue={props.tags} onChange={(e) => setStringTags(e.target.value)} value={stringTags}/>
                         <div className="d-flex align-items-center">
