@@ -19,15 +19,15 @@ function App() {
 
       getAllTags()
           .then(res => setTags(res));
-  }, [])
+  }, [notes, tags])
 
   return (
     <Router>
       <div>
-        <Sidebar/>
+        <Sidebar notes={notes} tags={tags}/>
         <div style={{marginLeft:"250px"}}>
           <Switch>
-            <Route exact path="/" component={Home}/>
+            <Route exact path="/" children={<MainContent setNotes={setNotes} notes={notes}/>}/>
             <Route path="/note/:id" render={(props) => <FullPageNote key={props.location.key}/>}/>
             <Route path="/" children={<p>404 Page</p>}/>
           </Switch>             

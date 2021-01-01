@@ -42,18 +42,12 @@ const ListItem = styled.div`
     }
 `;
 
-const Sidebar = () => {
-    const [tags, setTags] = useState();
-    const [notes, setNotes] = useState();
+const Sidebar = (props) => {
+    const tags = props.tags;
+    const notes = props.notes;
+    // const [tags, setTags] = useState();
+    // const [notes, setNotes] = useState();
     const [active, setActive] = useState();
-
-    useEffect(() => {
-        getAllNotes()
-            .then(res => setNotes(res))
-        
-        getAllTags()
-            .then(res => setTags(res))
-    }, [])
 
     return(
         <SidebarContainer>
