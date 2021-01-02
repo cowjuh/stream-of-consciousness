@@ -57,7 +57,7 @@ router.route('/add').post((req, res) => {
   });
 
   newNote.save()
-  .then(() => res.json('Note added!'))
+  .then(() => res.json(newNote._id))
   .catch(err => res.status(400).json('Error: ' + err));
 });
 

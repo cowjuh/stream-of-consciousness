@@ -26,16 +26,16 @@ const SidebarSection = styled.div`
 
 const ListText = styled.div`
     cursor: pointer;
-    padding: 5px 0px;
+    padding: 2px 0px;
     overflow: hidden; 
     margin-top: -1px;
     text-overflow: ellipsis;
     white-space: nowrap;
     font-weight: 600;
-    color: #555555;
+    color: ${props => props.active ? "blue" : "#555555"};
 
     :hover {
-        color: #000000;
+        color: blue;
     }
 `;
 
@@ -60,7 +60,7 @@ const Sidebar = (props) => {
     const tags = props.tags;
     const notes = props.notes;
     const categories = props.categories;
-    const [active, setActive] = useState();
+    const [active, setActive] = useState("none");
     const [recentExpanded, setRecentExpanded] = useState(5);
 
     return(
@@ -71,22 +71,24 @@ const Sidebar = (props) => {
                     <a href="https://github.com/cowjuh/stream-of-consciousness">By Jenny Zhang</a>
                 </StyledLink>
             </SidebarSection>
-            {/* <SidebarSection>
-                <Button value="New Note"/>
-            </SidebarSection> */}
+            <SidebarSection>
+                <StyledLink to={{pathname: `/new`}}>
+                    <Button value="New Note"/>
+                </StyledLink>
+            </SidebarSection>
             <SidebarSection>
                 <SectionText>CATEGORIES</SectionText> 
                 {!categories ? null : categories.map((category) => {
                     return (
-                        <StyledLink to={{ pathname: `/category/${category}`}}>
-                            <ListText>{category}</ListText>                        
+                        <StyledLink  onClick={() => setActive(category)} to={{ pathname: `/category/${category}`}}>
+                            <ListText active={active == category ? true : false}>{category}</ListText>                        
                         </StyledLink>
                     )
                 })}  
             </SidebarSection>
             <SidebarSection>
                 {/* <Link to={{ pathname: `/`}}>All Notes</Link> */}
-                <SectionText>RECENT</SectionText>
+                <SectionText>RECENT NOTES</SectionText>
                 {!notes ? null : notes.slice(0).reverse().slice(0, recentExpanded).map((note) => {
                     return (
                         <StyledLink to={{ pathname: `/note/${note._id}`}}>

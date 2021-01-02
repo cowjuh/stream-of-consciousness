@@ -1,19 +1,24 @@
 import React, {useState, useEffect} from 'react';
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch} from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import Home from './components/Home';
-import TempComp from './components/TempComp';
 import Sidebar from './components/Sidebar';
 import {getAllNotes, getAllTags, getAllCategories} from './utils/api';
 import MainContent from './components/MainContent';
 import FullPageNote from './components/FullPageNote';
 import CategoryPage from './components/CategoryPage';
+import NoteEditor from './components/NoteEditor';
 
 function App() {
   const [notes, setNotes] = useState();
   const [tags, setTags] = useState();
   const [categories, setCategories] = useState();
+  const [update, setUpdate] = useState(false);
+
+  const handleUpdate = () => {
+    console.log("ran??/");
+    setUpdate(!update);
+  }
 
   useEffect(() => {
       getAllNotes()
@@ -24,7 +29,7 @@ function App() {
 
       getAllCategories()
       .then(res => setCategories(res));
-  }, [])
+  }, [update])
 
   return (
     <Router>
@@ -33,7 +38,8 @@ function App() {
         <div style={{marginLeft:"250px"}}>
           <Switch>
             <Route exact path="/" children={<MainContent setNotes={setNotes} notes={notes}/>}/>
-            <Route path="/note/:id" render={(props) => <FullPageNote key={props.location.key}/>}/>
+            <Route exact path="/new" children={<NoteEditor newNote handleUpdate={setUpdate}/>}/>
+            <Route path="/note/:id" render={(props) => <FullPageNote handleUpdate={handleUpdate} key={props.location.key}/>}/>
             <Route path="/category/:category" render={(props) => <CategoryPage key={props.location.key}/>}/>
             <Route path="/" children={<p>404 Page</p>}/>
           </Switch>             

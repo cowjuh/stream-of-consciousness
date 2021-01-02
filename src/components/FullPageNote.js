@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import {getNoteByID} from '../utils/api';
 import NoteCard from './NoteCard';
+import NoteEditor from './NoteEditor'
 
 const FullPageNote = (props) => {
     const id = window.location.pathname.split("/").pop();
@@ -10,9 +11,9 @@ const FullPageNote = (props) => {
             .then((res) => setNote(res))
     }, [])
     return (
-        <div className="px-4 d-flex flex-column justify-content-center align-items-center">
+        <React.Fragment>
             {!note ? null
-            :<NoteCard
+            :<NoteEditor
                 key={note._id}
                 id={note._id}
                 title={note.title}
@@ -21,9 +22,10 @@ const FullPageNote = (props) => {
                 tags={note.tags? note.tags : null}
                 createdAt={note.createdAt}
                 updatedAt={note.updatedAt}
+                handleUpdate={props.handleUpdate}
             />
             }            
-        </div>
+        </React.Fragment>
 
     )
 }

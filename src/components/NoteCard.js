@@ -10,6 +10,7 @@ import relativeTime from "dayjs/plugin/relativeTime";
 import Tag from './Atoms/Tag';
 import Flair from './Atoms/Flair';
 import Button from './Atoms/Button';
+import {splitByCommas} from '../utils/api';
 
 const Card = styled.div`
     background-color: #F9F9F9;
@@ -18,6 +19,9 @@ const Card = styled.div`
     padding: 20px;
     margin-bottom: 20px;
     width: 100%;
+
+    background-image: radial-gradient(#E7E7E7 1px, #F9F9F9 1px);
+    background-size: 20px 20px;
 `;
 
 const Container = styled.div`
@@ -68,8 +72,6 @@ const NoteCard = (props) => {
     const [stringTags, setStringTags] = useState();
     const [deleteCard, setDeleteCard] = useState(false);
     const [inputPassword, setInputPassword] = useState();
-    var createdAt = (new Date(props.createdAt)).toDateString();
-    var updatedAt = (new Date(props.updatedAt)).toDateString();
     dayjs.extend(relativeTime);
     var lastUpdated = dayjs().to(props.updatedAt);
     var lastCreated = dayjs().to(props.createdAt);
@@ -78,7 +80,7 @@ const NoteCard = (props) => {
         e.preventDefault();
         let tagArray;
         if(stringTags) {
-            tagArray = (stringTags.split(",")).filter(i => /\S/.test(i));
+            tagArray = splitByCommas(stringTags);
             setTags(tagArray);
         }
         else {

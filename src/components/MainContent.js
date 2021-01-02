@@ -88,7 +88,6 @@ export default function MainContent() {
             icon={faThLarge}
           /> */}
         </Configurable>
-        <NoteCreator onUpdate={() => setUpdate(true)}/>
         <CardView notes={notes} handleDelete={deleteNote}/>
     </Container>
   );

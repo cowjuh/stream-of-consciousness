@@ -35,3 +35,7 @@ export function getCategoryNotes(category) {
     .then((res) => {return res.data})
     .catch(err => console.log(err));
 }
+
+export function splitByCommas(inputString) {
+    return inputString.split(",").filter(i => /\S/.test(i));
+}
