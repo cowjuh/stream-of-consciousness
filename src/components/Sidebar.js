@@ -32,10 +32,10 @@ const ListText = styled.div`
     text-overflow: ellipsis;
     white-space: nowrap;
     font-weight: 600;
-    color: ${props => props.active ? "blue" : "#555555"};
+    color: ${props => props.active ? "#3f51b5" : "#555555"};
 
     :hover {
-        color: blue;
+        color: #3f51b5;
     }
 `;
 
@@ -78,6 +78,9 @@ const Sidebar = (props) => {
             </SidebarSection>
             <SidebarSection>
                 <SectionText>CATEGORIES</SectionText> 
+                <StyledLink  onClick={() => setActive("All")} to={{ pathname: `/category/All`}}>
+                    <ListText active={active == "All" ? true : false}>All</ListText>                        
+                </StyledLink>
                 {!categories ? null : categories.map((category) => {
                     return (
                         <StyledLink  onClick={() => setActive(category)} to={{ pathname: `/category/${category}`}}>

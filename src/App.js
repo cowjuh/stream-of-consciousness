@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import { BrowserRouter as Router, Route, Switch} from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch, Redirect} from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import Sidebar from './components/Sidebar';
@@ -37,6 +37,7 @@ function App() {
         <Sidebar notes={notes} tags={tags} categories={categories}/>
         <div style={{marginLeft:"250px"}}>
           <Switch>
+            <Redirect exact from="/" to="/category/All"/>
             <Route exact path="/" children={<MainContent setNotes={setNotes} notes={notes}/>}/>
             <Route exact path="/new" children={<NoteEditor newNote handleUpdate={setUpdate}/>}/>
             <Route path="/note/:id" render={(props) => <FullPageNote handleUpdate={handleUpdate} key={props.location.key}/>}/>

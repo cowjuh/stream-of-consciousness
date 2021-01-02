@@ -2,14 +2,15 @@ import styled from 'styled-components';
 import {Link} from 'react-router-dom'
 
 const CategoryFlair = styled.div`
-    background-color: #868686;
+    background-color: #E4E6E8;
     display: inline-block;
-    color: white;
+    color: #70777F;
     border-radius: 20px;
-    padding: 2px 8px;
+    padding: 1px 8px;
 
     :hover{
-        opacity: 0.7;
+        background-color: #3f51b5;
+        color: white;
     }
 `;
 
