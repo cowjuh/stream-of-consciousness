@@ -2,13 +2,15 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import Button from './Atoms/Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTag, faThLarge, faCalendar, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faTag, faThLarge, faCalendar, faTrash, faPencilAlt } from '@fortawesome/free-solid-svg-icons';
 import './noteEditor.css'
 import dayjs from 'dayjs';
 import relativeTime from "dayjs/plugin/relativeTime";
 import {splitByCommas} from '../utils/api';
 import axios from 'axios';
 import {useHistory} from 'react-router-dom';
+import Tag from './Atoms/Tag';
+import NotePreview from './NotePreview';
 
 const EditorContainer = styled.div`
     display: flex;
@@ -116,6 +118,7 @@ const NoteEditor = (props) => {
                 console.log(err)
             })
         props.handleUpdate();
+        setEditing(false);
     }
 
     const handleNewNote = () => {
@@ -161,11 +164,14 @@ const NoteEditor = (props) => {
     return(
         <EditorContainer>
             <Toolbar>
-                {newNote
-                    ? <Button onClick={handleNewNote} value="Create"/>
-                    
-                    : <React.Fragment>
+                {newNote ? <Button onClick={handleNewNote} value="Create"/> : null}
+                {editing
+                    ? <React.Fragment>
                         <Button onClick={handleSave} value="Save"/>
+                        <ActionIcon onClick={handleDelete} className="ml-4" icon={faTrash}/>
+                    </React.Fragment>
+                    : <React.Fragment>
+                        <ActionIcon onClick={() => setEditing(true)} icon={faPencilAlt}/>
                         <ActionIcon onClick={handleDelete} className="ml-4" icon={faTrash}/>
                     </React.Fragment>
                 }
@@ -191,7 +197,11 @@ const NoteEditor = (props) => {
                         contentEditable={true}
                         placeholder="None"
                     >
-                        {stringTags ? stringTags : null}
+                        {!tags ? null
+                            : tags.map((tag) => {
+                                return <Tag value={tag}/>
+                            })
+                        }
                     </TextContainer>
                 </FieldInputContainer>                
                 <FieldInputContainer>
@@ -221,16 +231,19 @@ const NoteEditor = (props) => {
                 >
                     {title ? title : null}
                 </TextContainer>
-                <TextContainer 
-                    id="note-content"
-                    suppressContentEditableWarning={true}
-                    onBlur={(e) => setContent(e.currentTarget.textContent)}
-                    className="text-editor flex-grow-1"
-                    contentEditable={true}
-                    placeholder="This supports Markdown!"
-                >
-                    {content ? content : null}
-                </TextContainer>
+                {editing
+                    ? <TextContainer 
+                        id="note-content"
+                        suppressContentEditableWarning={true}
+                        onBlur={(e) => setContent(e.currentTarget.textContent)}
+                        className="text-editor flex-grow-1"
+                        contentEditable={true}
+                        placeholder="This supports Markdown!"
+                        >
+                        {content ? content : null}
+                    </TextContainer>                
+                    : <NotePreview content={content}/>
+                    }  
             </EditorSection>
         </EditorContainer>
     )
