@@ -5,14 +5,16 @@ import Tag from './Atoms/Tag';
 import Button from './Atoms/Button';
 import {BrowserRouter as Router, Route, Switch, Link} from 'react-router-dom';
 import {getAllNotes, getAllTags} from '../utils/api';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTimes} from '@fortawesome/free-solid-svg-icons';
 
 const SidebarContainer = styled.div`
     height: 100vh;
-    width: 250px;
-    padding: 30px;
+    width: ${props => props.mobile ? "300px" : "250px"};
+    padding: ${props => props.mobile ? "0px 30px 30px 30px" : "30px"};
     position: fixed;
     background-color: white;
-    z-index: 1;
+    z-index: 2;
     overflow-x: hidden;
     border-right: 1px solid #E6E6E6;
 
@@ -22,6 +24,7 @@ const SidebarContainer = styled.div`
 `
 const SidebarSection = styled.div`
     margin-bottom: 20px;
+    position: relative;
 `;
 
 const ListText = styled.div`
@@ -56,6 +59,16 @@ const StyledLink = styled(Link)`
     }
 `;
 
+const HamburgerContentHeader = styled.div`
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 56px;
+    padding: 10px 0px;
+    border-bottom: 1px solid #F6F6F6;
+    background-color: white;
+`;
+
 const Sidebar = (props) => {
     const tags = props.tags;
     const notes = props.notes;
@@ -64,12 +77,20 @@ const Sidebar = (props) => {
     const [recentExpanded, setRecentExpanded] = useState(5);
 
     return(
-        <SidebarContainer>
+        <SidebarContainer mobile={props.mobile ? true : false}>
             <SidebarSection>
-                <StyledLink to={{pathname: `/`}}>
-                    <h2>🖋️Jot.</h2>
-                </StyledLink>
-                <a href="https://github.com/cowjuh/stream-of-consciousness">By Jenny Zhang</a>
+                {props.mobile 
+                ? <HamburgerContentHeader>
+                    <h3 style={{margin: "0"}}>Jot.</h3>
+                    <FontAwesomeIcon icon={faTimes} onTouchEnd={() => props.toggleSidebar()}/>   
+                </HamburgerContentHeader>
+                : <React.Fragment>
+                    <StyledLink to={{pathname: `/`}}>
+                        <h2>Jot.</h2>
+                    </StyledLink>
+                    <a href="https://github.com/cowjuh/stream-of-consciousness" style={{color:"gray", fontSize:"12px"}}>By Jenny Zhang</a>
+                </React.Fragment>
+                }
             </SidebarSection>
             <SidebarSection>
                 <StyledLink to={{pathname: `/new`}}>

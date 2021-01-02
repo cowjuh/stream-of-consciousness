@@ -46,10 +46,10 @@ function App() {
     <Router>
       <div>
         {width < breakpoint
-        ? <MobileMenu toggleSidebar={toggleSidebar} />
+        ? <MobileMenu toggleSidebar={() => toggleSidebar(true)} />
         : <Sidebar notes={notes} tags={tags} categories={categories}/>
         }
-        {sidebar ? <Sidebar notes={notes} tags={tags} categories={categories}/> : null}
+        {sidebar ? <Sidebar mobile toggleSidebar={toggleSidebar} notes={notes} tags={tags} categories={categories}/> : null}
         <div style={width < breakpoint ? null : {marginLeft:"250px"}}>
           <Switch>
             <Redirect exact from="/" to="/category/All"/>
