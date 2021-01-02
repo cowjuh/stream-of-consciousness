@@ -164,19 +164,18 @@ const NoteEditor = (props) => {
     return(
         <EditorContainer>
             <Toolbar>
-                {newNote ? <Button onClick={handleNewNote} value="Create"/> : null}
-                {editing
-                    ? <React.Fragment>
-                        <Button onClick={handleSave} value="Save"/>
-                        <ActionIcon onClick={handleDelete} className="ml-4" icon={faTrash}/>
-                    </React.Fragment>
-                    : <React.Fragment>
-                        <ActionIcon onClick={() => setEditing(true)} icon={faPencilAlt}/>
-                        <ActionIcon onClick={handleDelete} className="ml-4" icon={faTrash}/>
-                    </React.Fragment>
+                {newNote
+                    ? <Button onClick={handleNewNote} value="Create"/>
+                    : editing
+                        ? <React.Fragment>
+                            <Button onClick={handleSave} value="Save"/>
+                            <ActionIcon onClick={handleDelete} className="ml-4" icon={faTrash}/>
+                        </React.Fragment>
+                        : <React.Fragment>
+                            <ActionIcon onClick={() => setEditing(true)} icon={faPencilAlt}/>
+                            <ActionIcon onClick={handleDelete} className="ml-4" icon={faTrash}/>
+                        </React.Fragment>
                 }
-                
-                
             </Toolbar>               
             <EditorSection style={{marginTop: "80px"}}>
                 <FieldInputContainer>
@@ -199,7 +198,7 @@ const NoteEditor = (props) => {
                     >
                         {!tags ? null
                             : tags.map((tag) => {
-                                return <Tag value={tag}/>
+                                return <Tag value={tag} onClick={() => console.log("Clicked tag: ", tag)}/>
                             })
                         }
                     </TextContainer>
@@ -231,7 +230,7 @@ const NoteEditor = (props) => {
                 >
                     {title ? title : null}
                 </TextContainer>
-                {editing
+                {editing || newNote
                     ? <TextContainer 
                         id="note-content"
                         suppressContentEditableWarning={true}
