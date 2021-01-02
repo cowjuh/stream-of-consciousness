@@ -18,7 +18,11 @@ const EditorContainer = styled.div`
     height: 100vh;
     width: 100vw;
     padding: 0px 30px;
-    position: relative
+    position: relative;
+    
+    @media (max-width: 768px) {
+        height: 95vh;
+    }
 `;
 
 const EditorSection = styled.div`
@@ -136,11 +140,6 @@ const NoteEditor = (props) => {
             category: category,
             tags: tagArray
         }
-        setTitle(null);
-        setContent(null);
-        setCategory(null);
-        setStringTags(null);
-        setTags(null);
         axios.post(`notes/add`, updatedNote)
             .then(res => {
                 console.log(res.data);

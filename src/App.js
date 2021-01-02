@@ -8,19 +8,28 @@ import MainContent from './components/MainContent';
 import FullPageNote from './components/FullPageNote';
 import CategoryPage from './components/CategoryPage';
 import NoteEditor from './components/NoteEditor';
+import MobileMenu from './components/Mobile/MobileMenu';
 
 function App() {
   const [notes, setNotes] = useState();
   const [tags, setTags] = useState();
   const [categories, setCategories] = useState();
   const [update, setUpdate] = useState(false);
+  const [width, setWidth] = useState(window.innerWidth);
+  const [sidebar, setSidebar] = useState(false);
+  const breakpoint = 768;
 
   const handleUpdate = () => {
-    console.log("ran??/");
     setUpdate(!update);
   }
 
+  const toggleSidebar = () => {
+    setSidebar(!sidebar);
+  }
+
   useEffect(() => {
+      const handleWindowResize = () => setWidth(window.innerWidth)
+      window.addEventListener('resize', handleWindowResize);
       getAllNotes()
           .then(res => setNotes(res));
 
@@ -29,13 +38,19 @@ function App() {
 
       getAllCategories()
       .then(res => setCategories(res));
+
+      return () => window.removeEventListener("resize", handleWindowResize);
   }, [update])
 
   return (
     <Router>
       <div>
-        <Sidebar notes={notes} tags={tags} categories={categories}/>
-        <div style={{marginLeft:"250px"}}>
+        {width < breakpoint
+        ? <MobileMenu toggleSidebar={toggleSidebar} />
+        : <Sidebar notes={notes} tags={tags} categories={categories}/>
+        }
+        {sidebar ? <Sidebar notes={notes} tags={tags} categories={categories}/> : null}
+        <div style={width < breakpoint ? null : {marginLeft:"250px"}}>
           <Switch>
             <Redirect exact from="/" to="/category/All"/>
             <Route exact path="/" children={<MainContent setNotes={setNotes} notes={notes}/>}/>

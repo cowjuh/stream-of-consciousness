@@ -45,7 +45,7 @@ const CategoryPage = () => {
     return (
         <Container className="p-4">
             <SectionText>CATEGORY</SectionText>
-            <h2>{category}</h2>
+            <h1>{category}</h1>
             <form className="mt-4 mb-4">
                 <InputField type="text" placeholder="Filter by tag" onChange={(e) => setFilter(e.target.value)}/>
             </form>
