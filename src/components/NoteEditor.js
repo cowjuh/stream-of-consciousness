@@ -30,7 +30,7 @@ const Toolbar = styled.div`
     display: flex;
     align-items: center;
     width: 100%;
-    height: 80px;
+    height: 50px;
     border-bottom: 1px solid #F6F6F6;
     background-color: white;
     position: fixed;
@@ -41,7 +41,7 @@ const TextContainer = styled.div`
     width: 100%;
     border: none;
     resize: none;
-    magin: 0px;
+    margin: 0px;
 
     :focus {
         outline: none !important;
@@ -177,7 +177,7 @@ const NoteEditor = (props) => {
                         </React.Fragment>
                 }
             </Toolbar>               
-            <EditorSection style={{marginTop: "80px"}}>
+            <EditorSection style={{marginTop: "50px"}}>
                 <FieldInputContainer>
                     <InputIcon color="gray" icon={faCalendar}/>
                     <InputName>Updated</InputName>
@@ -238,9 +238,10 @@ const NoteEditor = (props) => {
                         className="text-editor flex-grow-1"
                         contentEditable={true}
                         placeholder="This supports Markdown!"
+                        spellCheck='true'
                         >
                         {content ? content : null}
-                    </TextContainer>                
+                    </TextContainer>   
                     : <NotePreview content={content}/>
                     }  
             </EditorSection>
