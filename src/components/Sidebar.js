@@ -68,8 +68,8 @@ const Sidebar = (props) => {
             <SidebarSection>
                 <StyledLink to={{pathname: `/`}}>
                     <h2>🖋️Jot.</h2>
-                    <a href="https://github.com/cowjuh/stream-of-consciousness">By Jenny Zhang</a>
                 </StyledLink>
+                <a href="https://github.com/cowjuh/stream-of-consciousness">By Jenny Zhang</a>
             </SidebarSection>
             <SidebarSection>
                 <StyledLink to={{pathname: `/new`}}>
