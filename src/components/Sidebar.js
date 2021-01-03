@@ -73,8 +73,13 @@ const Sidebar = (props) => {
     const tags = props.tags;
     const notes = props.notes;
     const categories = props.categories;
-    const [active, setActive] = useState("none");
     const [recentExpanded, setRecentExpanded] = useState(5);
+
+    const handleClick = () => {
+        if(props.toggleSidebar) {
+            props.toggleSidebar();
+        }
+    }
 
     return(
         <SidebarContainer mobile={props.mobile ? true : false}>
@@ -82,7 +87,7 @@ const Sidebar = (props) => {
                 {props.mobile 
                 ? <HamburgerContentHeader>
                     <h3 style={{margin: "0"}}>Jot.</h3>
-                    <FontAwesomeIcon icon={faTimes} onTouchEnd={() => props.toggleSidebar()}/>   
+                    <FontAwesomeIcon icon={faTimes} onClick={handleClick}/>   
                 </HamburgerContentHeader>
                 : <>
                     <StyledLink to={{pathname: `/`}}>
@@ -93,19 +98,19 @@ const Sidebar = (props) => {
                 }
             </SidebarSection>
             <SidebarSection>
-                <StyledLink onTouchEnd={() => props.toggleSidebar()} to={{pathname: `/new`}}>
+                <StyledLink to={{pathname: `/new`}} onClick={handleClick}>
                     <Button value="New Note"/>
                 </StyledLink>
             </SidebarSection>
             <SidebarSection>
                 <SectionText>CATEGORIES</SectionText> 
-                <StyledLink  onTouchEnd={() => props.toggleSidebar()} onClick={() => setActive("All")} to={{ pathname: `/category/All`}}>
-                    <ListText active={active == "All" ? true : false}>All</ListText>                        
+                <StyledLink  onClick={handleClick} to={{ pathname: `/category/All`}}>
+                    <ListText>All</ListText>                        
                 </StyledLink>
                 {categories && categories.map((category) => {
                     return (
-                        <StyledLink onTouchEnd={() => props.toggleSidebar()} onClick={() => {setActive(category)}} to={{ pathname: `/category/${category}`}}>
-                            <ListText active={active == category ? true : false}>{category}</ListText>                        
+                        <StyledLink onClick={handleClick} to={{ pathname: `/category/${category}`}}>
+                            <ListText>{category}</ListText>                        
                         </StyledLink>
                     )
                 })}  
@@ -114,7 +119,7 @@ const Sidebar = (props) => {
                 <SectionText>RECENT NOTES</SectionText>
                 {notes && notes.slice(0).reverse().slice(0, recentExpanded).map((note) => {
                     return (
-                        <StyledLink onTouchEnd={() => props.toggleSidebar()} to={{ pathname: `/note/${note._id}`}}>
+                        <StyledLink onClick={handleClick} to={{ pathname: `/note/${note._id}`}}>
                             <ListText>{note.title}</ListText>                        
                         </StyledLink>
                     )
