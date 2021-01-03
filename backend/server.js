@@ -18,7 +18,7 @@ app.use(bodyParser.json());
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.use('/notes', notesRouter);
+app.use('/api/notes', notesRouter);
 
 app.use(express.static(publicPath));
 app.get('*', (req, res) => {

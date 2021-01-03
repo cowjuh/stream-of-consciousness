@@ -143,7 +143,7 @@ const NoteEditor = (props) => {
         axios.post(`notes/add`, updatedNote)
             .then(res => {
                 console.log(res.data);
-                routeChange(`/note/${res.data}`);
+                routeChange(`api/note/${res.data}`);
             })
             .catch(err => {
                 console.log(err)

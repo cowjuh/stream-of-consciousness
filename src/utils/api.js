@@ -1,37 +1,37 @@
 import axios from 'axios';
 
 export function getAllTags() {
-    return axios.get(`notes/tags`)
+    return axios.get(`api/notes/tags`)
     .then((res) => {return res.data})
     .catch((err) => console.log(err));
 }
 
 export function getAllNotes() {
-    return axios.get(`notes/`)
+    return axios.get(`api/notes/`)
     .then((res) => {return res.data})
     .catch((err) => console.log(err));
 }
 
 export function deleteNoteByID(id) {
-    return axios.delete(`notes/${id}`)
+    return axios.delete(`api/notes/${id}`)
     .then(console.log("Note deleted!"))
     .catch(err => console.log(err));
 }
 
 export function getNoteByID(id) {
-    return axios.get(`notes/${id}`)
+    return axios.get(`api/notes/${id}`)
     .then((res) => {return res.data})
     .catch(err => console.log(err));
 }
 
 export function getAllCategories() {
-    return axios.get(`notes/categories`)
+    return axios.get(`api/notes/categories`)
     .then((res) => {return res.data})
     .catch(err => console.log(err));
 }
 
 export function getCategoryNotes(category) {
-    return axios.get(`notes/categories/${category}`)
+    return axios.get(`api/notes/categories/${category}`)
     .then((res) => {return res.data})
     .catch(err => console.log(err));
 }

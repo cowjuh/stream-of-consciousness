@@ -60,7 +60,7 @@ export default function NoteCreator(props){
             category: category,
             tags: tagArray
         }
-        axios.post('/notes/add', newNote)
+        axios.post('/api/notes/add', newNote)
             .then(res => {
                 console.log(res.data);
                 setTitle("");
