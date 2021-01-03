@@ -153,7 +153,7 @@ const SmallCard = (props) => {
 
                     <h4 style={{color: "#272E40"}}>{title}</h4>
                     <ContentPreview>{content}</ContentPreview>
-                    {(tags || hover) && 
+                    {(tags && hover) && 
                         <TagsContainer className="mb-4">{                
                             tags.map((tag) => {
                                 return <Tag value={tag}/>
