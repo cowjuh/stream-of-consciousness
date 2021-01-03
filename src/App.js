@@ -54,7 +54,7 @@ function App() {
           <Switch>
             <Redirect exact from="/" to="/category/All"/>
             <Route exact path="/" children={<MainContent setNotes={setNotes} notes={notes}/>}/>
-            <Route exact path="/new" children={<NoteEditor newNote handleUpdate={setUpdate}/>}/>
+            <Route exact path="/new" children={<NoteEditor newNote handleUpdate={handleUpdate}/>}/>
             <Route path="/note/:id" render={(props) => <FullPageNote handleUpdate={handleUpdate} key={props.location.key}/>}/>
             <Route path="/category/:category" render={(props) => <CategoryPage key={props.location.key}/>}/>
             <Route path="/" children={<p>404 Page</p>}/>

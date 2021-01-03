@@ -101,6 +101,7 @@ const NoteEditor = (props) => {
     }
 
     const handleSave = () => {
+        props.handleUpdate();
         let tagArray;
         if(stringTags) {
             tagArray = splitByCommas(stringTags);
@@ -122,11 +123,11 @@ const NoteEditor = (props) => {
             .catch(err => {
                 console.log(err)
             })
-        props.handleUpdate();
         setEditing(false);
     }
 
     const handleNewNote = () => {
+        props.handleUpdate();
         let tagArray;
         if(stringTags) {
             tagArray = splitByCommas(stringTags);
@@ -149,16 +150,15 @@ const NoteEditor = (props) => {
             .catch(err => {
                 console.log(err)
             })
-        props.handleUpdate();
     }
 
 
     const handleDelete = () => {
         routeChange('/');
-        axios.delete(`notes/${id}`)
+        props.handleUpdate();
+        axios.delete(`api/notes/${id}`)
             .then(console.log("Note deleted!"))
             .catch(err => {console.log(err)})
-        props.handleUpdate(2);
     }
 
     return(
@@ -182,13 +182,13 @@ const NoteEditor = (props) => {
                     <InputIcon color="#C4C6C8" icon={faCalendar}/>
                     <InputName>Updated</InputName>
                     <TextContainer style={{color: "#888888"}} contentEditable={false}>
-                        {lastUpdated ? lastUpdated : "-"}
+                        {lastUpdated && !newNote ? lastUpdated : "-"}
                     </TextContainer>
                 </FieldInputContainer>
                 <FieldInputContainer>
                     <InputIcon color="#C4C6C8" icon={faTag}/>
                     <InputName>Tags</InputName>
-                    {editing
+                    {editing || newNote
                     ? <TextContainer
                         id="note-tags"
                         onInput={(e) => setStringTags(e.currentTarget.textContent)}
@@ -196,7 +196,7 @@ const NoteEditor = (props) => {
                         contentEditable={true}
                         placeholder="None"
                     >
-                        {tags.map((tag) => {
+                        {tags && tags.map((tag) => {
                             return <span>{tag ? tag + "," : ""}</span>
                         })}
                     </TextContainer>
@@ -216,7 +216,7 @@ const NoteEditor = (props) => {
                         suppressContentEditableWarning={true}
                         onBlur={(e) => setCategory(e.currentTarget.textContent)}
                         className="text-editor"
-                        contentEditable={editing}
+                        contentEditable={editing || newNote}
                         placeholder="None"
                     >
                         {category && category}
@@ -229,7 +229,7 @@ const NoteEditor = (props) => {
                     onBlur={(e) => setTitle(e.currentTarget.textContent)}
                     style={{fontSize: "40px"}}
                     className="text-editor"
-                    contentEditable={editing}
+                    contentEditable={editing || newNote}
                     placeholder="Untitled"
                 >
                     {title && title}

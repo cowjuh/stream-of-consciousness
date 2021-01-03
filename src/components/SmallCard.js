@@ -1,8 +1,5 @@
 import React, {useState} from 'react';
 import styled from 'styled-components';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrash, faPencilAlt} from '@fortawesome/free-solid-svg-icons';
-import NotePreview from './NotePreview';
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import dayjs from "dayjs";

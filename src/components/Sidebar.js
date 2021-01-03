@@ -69,6 +69,18 @@ const HamburgerContentHeader = styled.div`
     background-color: white;
 `;
 
+const Logo = styled.h2`
+    color: black;
+    display: inline-block;
+    margin: 0;
+    transition: all 250ms;
+    :hover {
+        background: -webkit-linear-gradient(110deg, #e1f549, #29d0be, #6cb8ea, #ff5959);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+`;
+
 const Sidebar = (props) => {
     const tags = props.tags;
     const notes = props.notes;
@@ -91,7 +103,7 @@ const Sidebar = (props) => {
                 </HamburgerContentHeader>
                 : <>
                     <StyledLink to={{pathname: `/`}}>
-                        <h2>Jot.</h2>
+                        <Logo>Jot.</Logo>
                     </StyledLink>
                     {/* <a href="https://github.com/cowjuh/stream-of-consciousness" style={{color:"gray", fontSize:"12px"}}>By Jenny Zhang</a> */}
                 </>
