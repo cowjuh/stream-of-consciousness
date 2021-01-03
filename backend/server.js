@@ -10,6 +10,7 @@ const app = express();
 const publicPath = path.join(__dirname, '../', '/build');
 const uri = process.env.ATLAS_URI;
 const notesRouter = require('./routes/notes');
+const usersRouter = require('./routes/users');
 
 const port = process.env.PORT || 5000;
 
@@ -19,6 +20,7 @@ app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use('/api/notes', notesRouter);
+app.use('/api/users', usersRouter);
 
 app.use(express.static(publicPath));
 app.get('*', (req, res) => {

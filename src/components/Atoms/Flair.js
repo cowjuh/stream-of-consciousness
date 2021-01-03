@@ -2,16 +2,17 @@ import styled from 'styled-components';
 import {Link} from 'react-router-dom'
 
 const CategoryFlair = styled.div`
-    background-color: #E4E6E8;
+    background-color: ${props => props.hover ? "#e91e63" : "#E4E6E8"};
     display: inline-block;
-    color: #70777F;
+    color: ${props => props.hover ? "white" : "#70777F"};
     border-radius: 20px;
     padding: 1px 8px;
-
-    :hover{
-        background-color: #3f51b5;
+    transition: all 250ms;
+      
+      :hover {
         color: white;
-    }
+        background-color: #e91e63;
+      }
 `;
 
 const StyledLink = styled(Link)`
@@ -27,7 +28,7 @@ const StyledLink = styled(Link)`
 const Flair = (props) => {
     return(
         <StyledLink to={{pathname: `/category/${props.value}`}}>
-            <CategoryFlair>{props.value}</CategoryFlair>
+            <CategoryFlair hover={props.hover}>{props.value}</CategoryFlair>
         </StyledLink>
     )
 }

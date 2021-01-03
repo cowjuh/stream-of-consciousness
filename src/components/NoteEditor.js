@@ -75,6 +75,7 @@ const InputName = styled.p`
 
 const ActionIcon = styled(FontAwesomeIcon)`
     cursor: pointer;
+    transition: all 250ms;
     :hover {
         opacity: 0.7;
     }
@@ -114,7 +115,7 @@ const NoteEditor = (props) => {
             category: category,
             tags: tagArray
         }
-        axios.post(`notes/update/${id}`, updatedNote)
+        axios.post(`api/notes/update/${id}`, updatedNote)
             .then(res => {
                 console.log(res.data);
             })
@@ -140,10 +141,10 @@ const NoteEditor = (props) => {
             category: category,
             tags: tagArray
         }
-        axios.post(`notes/add`, updatedNote)
+        axios.post(`api/notes/add`, updatedNote)
             .then(res => {
                 console.log(res.data);
-                routeChange(`api/note/${res.data}`);
+                routeChange(`/note/${res.data}`);
             })
             .catch(err => {
                 console.log(err)
@@ -178,38 +179,44 @@ const NoteEditor = (props) => {
             </Toolbar>               
             <EditorSection style={{marginTop: "50px"}}>
                 <FieldInputContainer>
-                    <InputIcon color="gray" icon={faCalendar}/>
+                    <InputIcon color="#C4C6C8" icon={faCalendar}/>
                     <InputName>Updated</InputName>
                     <TextContainer style={{color: "#888888"}} contentEditable={false}>
                         {lastUpdated ? lastUpdated : "-"}
                     </TextContainer>
                 </FieldInputContainer>
                 <FieldInputContainer>
-                    <InputIcon color="gray" icon={faTag}/>
+                    <InputIcon color="#C4C6C8" icon={faTag}/>
                     <InputName>Tags</InputName>
-                    <TextContainer
+                    {editing
+                    ? <TextContainer
                         id="note-tags"
-                        suppressContentEditableWarning={true}
-                        onBlur={(e) => setStringTags(e.currentTarget.textContent)}
+                        onInput={(e) => setStringTags(e.currentTarget.textContent)}
                         className="text-editor"
                         contentEditable={true}
                         placeholder="None"
                     >
-                        {tags && tags.map((tag) => {
-                                return <Tag value={tag} onClick={() => console.log("Clicked tag: ", tag)}/>
-                            })
-                        }
+                        {tags.map((tag) => {
+                            return <span>{tag ? tag + "," : ""}</span>
+                        })}
                     </TextContainer>
+                    : <TextContainer>
+                        {tags && tags.map((tag) => {
+                            return <Tag value={tag} onClick={() => console.log("Clicked tag: ", tag)}/>
+                        })}
+                    </TextContainer>
+                    }
+
                 </FieldInputContainer>                
                 <FieldInputContainer>
-                    <InputIcon color="gray" icon={faThLarge}/>
+                    <InputIcon color="#C4C6C8" icon={faThLarge}/>
                     <InputName>Category</InputName>
                     <TextContainer
                         id="note-category"
                         suppressContentEditableWarning={true}
                         onBlur={(e) => setCategory(e.currentTarget.textContent)}
                         className="text-editor"
-                        contentEditable={true}
+                        contentEditable={editing}
                         placeholder="None"
                     >
                         {category && category}
@@ -219,11 +226,10 @@ const NoteEditor = (props) => {
             <EditorSection className="flex-grow-1">
                 <TextContainer
                     id="note-title"
-                    suppressContentEditableWarning={true}
                     onBlur={(e) => setTitle(e.currentTarget.textContent)}
                     style={{fontSize: "40px"}}
                     className="text-editor"
-                    contentEditable={true}
+                    contentEditable={editing}
                     placeholder="Untitled"
                 >
                     {title && title}

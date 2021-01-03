@@ -5,6 +5,16 @@
     display: block;
 }
 
+[contentEditable=false]{
+    -webkit-user-modify: read-only;
+    pointer-events: none;
+    cursor: default;
+}
+
+[contentEditable=false].text-editor{
+    -webkit-user-modify: read-only;
+}
+
 .text-editor {
     max-width: 100%;
     width: 100%;

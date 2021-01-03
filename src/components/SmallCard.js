@@ -18,8 +18,9 @@ const Card = styled.div`
     border: none;
     border-radius: 5px;
     padding: 20px;
-    min-width: 250px;
-    min-height: 250px;
+    min-width: 100px;
+    min-height: 200px;
+    transition: all 250ms;
 
     @media(max-width: 768px){
         min-width: 0;
@@ -27,45 +28,15 @@ const Card = styled.div`
 
     :hover {
         transform: scale(1.02);
+        background-color: #fde8ef;
     }
-`;
 
-const Container = styled.div`
-    width: 100%;
-`;
-
-const NoteEditor = styled.form`
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: start;
-`;
-
-const InputField = styled.input`
-    border-radius: 3px;
-    border: none;
-    padding: 5px;
-    background-color: white;
-    margin-bottom: 10px;
-    min-width: 500px;
-    width: 100%;
-    @media(max-width: 768px){
-        min-width: 0;
+    :hover h4{
+        color: #e91e63;
     }
-`;
 
-const TextArea = styled.textarea`
-    border-radius: 3px;
-    border: none;
-    padding: 5px;
-    margin-bottom: 10px;
-    background-color: white;
-    min-height: 150px;
-    min-width: 500px;
-    width: 100%;
-    @media(max-width: 768px){
-        min-width: 0;
-        min-height: 60vh;
+    :hover p{
+        color: #e91e63;
     }
 `;
 
@@ -79,16 +50,13 @@ const StyledLink = styled(Link)`
     }
 `;
 
-const CardDetails = styled.div`
-    visibility: ${props => props.visible ? "visible" : "hidden"};
-`;
-
 const ContentPreview = styled.div`
     overflow: hidden;
     display: -webkit-box;
-    -webkit-line-clamp: 3;
+    -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;  
     color: #7A7F89;
+    color: ${props => props.color};
 `;
 
 const TagsContainer = styled.div`
@@ -98,7 +66,18 @@ const TagsContainer = styled.div`
     position: absolute;
     left: 0px;
     bottom: 0px;
-    background-image: linear-gradient(rgba(249,249,249,0), rgba(249,249,249,1) ,rgba(249,249,249,1));
+    background-image: linear-gradient(#fde8ef00, #fde8ef00 ,#fde8ef);
+`;
+
+const BodyText = styled.p`
+    margin: 0;
+`;
+
+const Title = styled.h4`
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;  
 `;
 
 const SmallCard = (props) => {
@@ -147,16 +126,16 @@ const SmallCard = (props) => {
             <Card onMouseOver={() => setHover(true)} onMouseLeave={() => setHover(false)}>
                 <>
                     <div className="d-flex justify-content-between mb-2">
-                        <p className="m-0" style={{color: "#7A7F89"}}>{lastCreated}</p>
-                        {category && <Flair value={category}/>}
+                        <BodyText>{lastCreated}</BodyText>
+                        {category && <Flair hover={hover} value={category}/>}
                     </div>
 
-                    <h4 style={{color: "#272E40"}}>{title}</h4>
-                    <ContentPreview>{content}</ContentPreview>
+                    <Title>{title}</Title>
+                    <ContentPreview color={hover ? "#e91e6373" : "#7A7F89"}>{content}</ContentPreview>
                     {(tags && hover) && 
                         <TagsContainer className="mb-4">{                
                             tags.map((tag) => {
-                                return <Tag value={tag}/>
+                                return <Tag hover={hover} value={tag}/>
                             })}
                         </TagsContainer>
                     }

@@ -28,7 +28,7 @@ return (
     <div
     style={styles}
     dangerouslySetInnerHTML={{
-        __html: sanitizeHtml(marked(text), {
+        __html: sanitizeHtml(marked(text.replace(/href/g, "target='_blank' href")), {
         allowedTags,
         allowedAttributes,
         }),

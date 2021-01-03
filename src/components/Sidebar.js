@@ -38,7 +38,7 @@ const ListText = styled.div`
     color: ${props => props.active ? "#3f51b5" : "#555555"};
 
     :hover {
-        color: #3f51b5;
+        color: #e91e63;
     }
 `;
 
@@ -55,7 +55,7 @@ const StyledLink = styled(Link)`
 
     &:focus, &:hover, &:visited, &:link, &:active {
         text-decoration: none;
-        color: inherit;
+        color: black;
     }
 `;
 
@@ -93,7 +93,7 @@ const Sidebar = (props) => {
                     <StyledLink to={{pathname: `/`}}>
                         <h2>Jot.</h2>
                     </StyledLink>
-                    <a href="https://github.com/cowjuh/stream-of-consciousness" style={{color:"gray", fontSize:"12px"}}>By Jenny Zhang</a>
+                    {/* <a href="https://github.com/cowjuh/stream-of-consciousness" style={{color:"gray", fontSize:"12px"}}>By Jenny Zhang</a> */}
                 </>
                 }
             </SidebarSection>
