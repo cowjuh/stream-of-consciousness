@@ -17,6 +17,7 @@ const SidebarContainer = styled.div`
     z-index: 2;
     overflow-x: hidden;
     border-right: 1px solid #E6E6E6;
+    transition: all 250ms;
 
     ::-webkit-scrollbar{
         display: none;
@@ -115,7 +116,7 @@ const Sidebar = (props) => {
                 </StyledLink>
             </SidebarSection>
             <SidebarSection>
-                <SectionText>CATEGORIES</SectionText> 
+                <SectionText>CATEGORY</SectionText> 
                 <StyledLink  onClick={handleClick} to={{ pathname: `/category/All`}}>
                     <ListText>All</ListText>                        
                 </StyledLink>
@@ -128,7 +129,7 @@ const Sidebar = (props) => {
                 })}  
             </SidebarSection>
             <SidebarSection>
-                <SectionText>RECENT NOTES</SectionText>
+                <SectionText>RECENT</SectionText>
                 {notes && notes.slice(0).reverse().slice(0, recentExpanded).map((note) => {
                     return (
                         <StyledLink onClick={handleClick} to={{ pathname: `/note/${note._id}`}}>

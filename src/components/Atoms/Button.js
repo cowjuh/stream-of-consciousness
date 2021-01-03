@@ -6,7 +6,8 @@ const ButtonContainer = styled.button`
     border-radius: 5px;
     font-weight: 600;
     transition: all 250ms;
-    padding: 5px 20px;
+    margin-right: 10px;
+    padding: 5px 10px;
     color: $color-black;
     box-shadow: 0 0 6px 0 rgba(157, 96, 212, 0.5);
     border: solid 3px transparent;

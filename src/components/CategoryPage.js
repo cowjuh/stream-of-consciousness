@@ -3,6 +3,12 @@ import {getCategoryNotes, getAllNotes} from '../utils/api';
 import React, { useEffect, useState } from 'react';
 import Container from 'react-bootstrap/Container';
 import styled from 'styled-components';
+import Button from './Atoms/Button';
+import axios from 'axios';
+import {useHistory} from 'react-router-dom';
+import ClickableIcon from './Atoms/ClickableIcon';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTimes, faFilter} from '@fortawesome/free-solid-svg-icons';
 
 const SectionText = styled.h5`
     margin-top: 20px;
@@ -28,27 +34,62 @@ const CategoryPage = () => {
     const category = window.location.pathname.split("/").pop();
     const [notes, setNotes] = useState();
     const [filter, setFilter] = useState();
+    const [filteredState, setFilteredState] = useState(false);
+    const history = useHistory();
+
+    const routeChange = (route) =>{ 
+        let path = `${route}`; 
+        history.push(path);
+    }
 
     useEffect(() => {
-        if(category === "All") {
-            getAllNotes()
-            .then(res => setNotes(res))
-            .catch(err => console.log(err))
-        }
-        else {
-            getCategoryNotes(category)
+        if(filteredState === false) {
+            if(category === "All") {
+                getAllNotes()
                 .then(res => setNotes(res))
-                .catch(err => console.log(err))            
-        }
-    }, [])
+                .catch(err => console.log(err))
+            }
+            else {
+                getCategoryNotes(category)
+                    .then(res => setNotes(res))
+                    .catch(err => console.log(err))            
+            }            
+        } 
+    }, [filteredState])
+
+    const handleNewNote = () => {
+        if (category != "All") routeChange(`/new/?category=${category}`);
+        else routeChange(`/new/`);
+    }
+
+    const handleFilter = (e) => {
+        e.preventDefault();
+        axios.get(`api/notes/filterByTag/?tag=${filter}&category=${category}`)
+          .then(res => {
+            setNotes(res.data);
+          })
+          .catch(err => console.log(err));
+        setFilteredState(true);
+    }
 
     return (
         <Container className="p-4">
             <SectionText>CATEGORY</SectionText>
             <h1>{category}</h1>
-            <form className="mt-4 mb-4">
-                <InputField type="text" placeholder="Filter by tag" onChange={(e) => setFilter(e.target.value)}/>
-            </form>                
+            <div className="w-100 justify-content-between d-flex align-items-center">
+                <Button onClick={handleNewNote} value={"New Note"}/>
+                <form onSubmit={handleFilter} className="mt-4 mb-4">
+                    <InputField className="mr-3" type="text" placeholder="Filter by tag" onChange={(e) => setFilter(e.target.value)}/>
+                    <button type="submit" style={{all: "initial"}}>
+                        <ClickableIcon margin={filteredState ? true : false} onClick={null} color="#3f51b5" icon={faFilter}/>
+                    </button>
+                    {filteredState &&
+                        <button type="reset" onClick={() => setFilteredState(false)} style={{all: "initial"}}>
+                            <ClickableIcon color="#e91e63" icon={faTimes}/>
+                        </button>
+                    }
+                </form>                    
+            </div>
             {notes && <CardView notes={notes}/>}                
         </Container>
 

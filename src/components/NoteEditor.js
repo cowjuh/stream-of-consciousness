@@ -8,9 +8,11 @@ import dayjs from 'dayjs';
 import relativeTime from "dayjs/plugin/relativeTime";
 import {splitByCommas} from '../utils/api';
 import axios from 'axios';
-import {useHistory} from 'react-router-dom';
+import {useHistory, useParams, BrowserRouter as Router} from 'react-router-dom';
 import Tag from './Atoms/Tag';
 import NotePreview from './NotePreview';
+import ClickableIcon from './Atoms/ClickableIcon';
+import { parse } from 'path';
 
 const EditorContainer = styled.div`
     display: flex;
@@ -60,7 +62,7 @@ const FieldInputContainer = styled.div`
 `;
 
 const InputIcon = styled(FontAwesomeIcon)`
-    width: 30px;
+    font-size: 14px;
     margin-right: 10px;
 `;
 
@@ -71,14 +73,6 @@ const InputName = styled.p`
     margin-right: 10px;
     display: inline-block;
     min-width: 120px;
-`;
-
-const ActionIcon = styled(FontAwesomeIcon)`
-    cursor: pointer;
-    transition: all 250ms;
-    :hover {
-        opacity: 0.7;
-    }
 `;
 
 const NoteEditor = (props) => {
@@ -94,6 +88,8 @@ const NoteEditor = (props) => {
     var lastUpdated = props && dayjs().to(props.updatedAt);
     var lastCreated = props && dayjs().to(props.createdAt);
     const history = useHistory();
+    let params = new URLSearchParams(window.location.search);
+    const queryCategory = params.get('category');
 
     const routeChange = (route) =>{ 
         let path = `${route}`; 
@@ -162,6 +158,8 @@ const NoteEditor = (props) => {
     }
 
     return(
+        <Router>
+
         <EditorContainer>
             <Toolbar>
                 {newNote
@@ -169,11 +167,11 @@ const NoteEditor = (props) => {
                     : editing
                         ? <>
                             <Button onClick={handleSave} value="Save"/>
-                            <ActionIcon onClick={handleDelete} className="ml-4" icon={faTrash}/>
+                            <ClickableIcon onClick={handleDelete} color={"#e91e63"} icon={faTrash}/>
                         </>
                         : <>
-                            <ActionIcon onClick={() => setEditing(true)} icon={faPencilAlt}/>
-                            <ActionIcon onClick={handleDelete} className="ml-4" icon={faTrash}/>
+                            <ClickableIcon margin onClick={() => setEditing(true)} color={"#3f51b5"} icon={faPencilAlt}/>
+                            <ClickableIcon onClick={handleDelete} color={"#e91e63"} icon={faTrash}/>
                         </>
                 }
             </Toolbar>               
@@ -220,6 +218,7 @@ const NoteEditor = (props) => {
                         placeholder="None"
                     >
                         {category && category}
+                        {newNote && queryCategory}
                     </TextContainer>
                 </FieldInputContainer>
             </EditorSection>
@@ -250,6 +249,7 @@ const NoteEditor = (props) => {
                     }  
             </EditorSection>
         </EditorContainer>
+        </Router>
     )
 }
 

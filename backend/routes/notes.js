@@ -8,13 +8,21 @@ router.route('/').get((req, res) => {
 });
 
 router.route('/filterByTag').get((req, res) => {
-  let queryString = req.query.tag;
-  let filter;
-  {queryString ? filter=queryString.split(',') : queryArray= ""}
-  if (queryString.length != 0) {
-    Note.find({tags: {$all: filter} })
+  let tagQuery = req.query.tag;
+  let categoryQuery = req.query.category;
+  if (tagQuery.length != 0 && (!categoryQuery || categoryQuery==="All")) {
+    Note.find({tags: {$all: tagQuery.split(',')} })
     .then(notes => res.json(notes))
     .catch(err => res.status(400).json('Error: ' + err));    
+  }
+  else if (tagQuery.length != 0 && categoryQuery) {
+    Note.find(
+      {
+        tags: {$all: tagQuery.split(',')},
+        category: categoryQuery
+    })
+    .then(notes => res.json(notes))
+    .catch(err => res.status(400).json('Error: ' + err));  
   }
   else {
     Note.find()
