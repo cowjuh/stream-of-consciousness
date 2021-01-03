@@ -111,7 +111,7 @@ const NoteCard = (props) => {
                     {!category ? <p style={{color: "gray"}}>No Category</p> : <Flair value={category}/>}
                     <h2>{title}</h2>
                     <NotePreview content={content}/>
-                    {!tags ? null : 
+                    {tags &&
                         <div className="mb-4">{                
                             tags.map((tag) => {
                                 return(
@@ -122,13 +122,13 @@ const NoteCard = (props) => {
                     }
                     <div className="d-flex align-items-center">
                         <FontAwesomeIcon icon={faTrash} className="mr-2" color="gray" onClick={() => setDeleteCard(!deleteCard)} cursor="pointer"/> 
-                        {deleteCard
-                            ? <form onSubmit={inputPassword === "del" ? () => props.handleDelete(props.id) : () => setDeleteCard(false)}>
+                        {deleteCard && 
+                            <form onSubmit={inputPassword === "del" ? () => props.handleDelete(props.id) : () => setDeleteCard(false)}>
                                 <input placeholder="Password" onChange={(e) => setInputPassword(e.target.value)}/>
                             </form>
-                            : null}
+                        }
                         <FontAwesomeIcon icon={faPencilAlt} color="gray" onClick={() => setEditing(!editing)} cursor="pointer"/>
-                        {props.createdAt != props.updatedAt ? <p style={{color: "gray"}} className="m-0 ml-2">{lastUpdated}</p> : null}
+                        {props.createdAt != props.updatedAt && <p style={{color: "gray"}} className="m-0 ml-2">{lastUpdated}</p>}
                     </div>
                 </React.Fragment>
                 : <Container>

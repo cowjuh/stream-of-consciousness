@@ -148,12 +148,12 @@ const SmallCard = (props) => {
                 <React.Fragment>
                     <div className="d-flex justify-content-between mb-2">
                         <p className="m-0" style={{color: "#7A7F89"}}>{lastCreated}</p>
-                        {!category ? null : <Flair value={category}/>}
+                        {category && <Flair value={category}/>}
                     </div>
 
                     <h4 style={{color: "#272E40"}}>{title}</h4>
                     <ContentPreview>{content}</ContentPreview>
-                    {!tags || !hover ? null : 
+                    {tags || hover && 
                         <TagsContainer className="mb-4">{                
                             tags.map((tag) => {
                                 return <Tag value={tag}/>

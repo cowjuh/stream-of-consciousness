@@ -81,17 +81,17 @@ const ActionIcon = styled(FontAwesomeIcon)`
 `;
 
 const NoteEditor = (props) => {
-    const [title, setTitle] = useState(props ? props.title : null);
-    const [content, setContent] = useState(props ? props.content : null);
-    const [category, setCategory] = useState(props ? props.category : null);
-    const [tags, setTags] = useState(props ? props.tags : null);
+    const [title, setTitle] = useState(props && props.title);
+    const [content, setContent] = useState(props && props.content);
+    const [category, setCategory] = useState(props && props.category);
+    const [tags, setTags] = useState(props && props.tags);
     const [stringTags, setStringTags] = useState();
     const [editing, setEditing] = useState(false);
     const [newNote, setNewNote] = useState(props.newNote ? true : false);
-    const id = props ? props.id : null;
+    const id = props && props.id;
     dayjs.extend(relativeTime);
-    var lastUpdated = props ? dayjs().to(props.updatedAt) : null;
-    var lastCreated = props ? dayjs().to(props.createdAt) : null;
+    var lastUpdated = props && dayjs().to(props.updatedAt);
+    var lastCreated = props && dayjs().to(props.createdAt);
     const history = useHistory();
 
     const routeChange = (route) =>{ 
@@ -195,8 +195,7 @@ const NoteEditor = (props) => {
                         contentEditable={true}
                         placeholder="None"
                     >
-                        {!tags ? null
-                            : tags.map((tag) => {
+                        {tags && tags.map((tag) => {
                                 return <Tag value={tag} onClick={() => console.log("Clicked tag: ", tag)}/>
                             })
                         }
@@ -213,7 +212,7 @@ const NoteEditor = (props) => {
                         contentEditable={true}
                         placeholder="None"
                     >
-                        {category ? category : null}
+                        {category && category}
                     </TextContainer>
                 </FieldInputContainer>
             </EditorSection>
@@ -227,7 +226,7 @@ const NoteEditor = (props) => {
                     contentEditable={true}
                     placeholder="Untitled"
                 >
-                    {title ? title : null}
+                    {title && title}
                 </TextContainer>
                 {editing || newNote
                     ? <TextContainer 
@@ -239,7 +238,7 @@ const NoteEditor = (props) => {
                         placeholder="This supports Markdown!"
                         spellCheck='true'
                         >
-                        {content ? content : null}
+                        {content && content}
                     </TextContainer>   
                     : <NotePreview content={content}/>
                     }  

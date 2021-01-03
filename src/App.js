@@ -49,7 +49,7 @@ function App() {
         ? <MobileMenu toggleSidebar={() => toggleSidebar(true)} />
         : <Sidebar notes={notes} tags={tags} categories={categories}/>
         }
-        {sidebar ? <Sidebar mobile toggleSidebar={toggleSidebar} notes={notes} tags={tags} categories={categories}/> : null}
+        {sidebar && <Sidebar mobile toggleSidebar={toggleSidebar} notes={notes} tags={tags} categories={categories}/>}
         <div style={width < breakpoint ? {paddingTop:"56px"}: {marginLeft:"250px"}}>
           <Switch>
             <Redirect exact from="/" to="/category/All"/>

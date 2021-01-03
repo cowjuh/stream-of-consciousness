@@ -12,19 +12,19 @@ const FullPageNote = (props) => {
     }, [])
     return (
         <React.Fragment>
-            {!note ? null
-            :<NoteEditor
-                key={note._id}
-                id={note._id}
-                title={note.title}
-                content={note.content}
-                category={note.category}
-                tags={note.tags? note.tags : null}
-                createdAt={note.createdAt}
-                updatedAt={note.updatedAt}
-                handleUpdate={props.handleUpdate}
-            />
-            }            
+            {note && 
+                <NoteEditor
+                        key={note._id}
+                        id={note._id}
+                        title={note.title}
+                        content={note.content}
+                        category={note.category}
+                        tags={note.tags && note.tags}
+                        createdAt={note.createdAt}
+                        updatedAt={note.updatedAt}
+                        handleUpdate={props.handleUpdate}
+                    />
+                }            
         </React.Fragment>
 
     )

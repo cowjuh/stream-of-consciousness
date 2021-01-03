@@ -102,7 +102,7 @@ const Sidebar = (props) => {
                 <StyledLink  onTouchEnd={() => props.toggleSidebar()} onClick={() => setActive("All")} to={{ pathname: `/category/All`}}>
                     <ListText active={active == "All" ? true : false}>All</ListText>                        
                 </StyledLink>
-                {!categories ? null : categories.map((category) => {
+                {categories && categories.map((category) => {
                     return (
                         <StyledLink onTouchEnd={() => props.toggleSidebar()} onClick={() => {setActive(category)}} to={{ pathname: `/category/${category}`}}>
                             <ListText active={active == category ? true : false}>{category}</ListText>                        
@@ -111,9 +111,8 @@ const Sidebar = (props) => {
                 })}  
             </SidebarSection>
             <SidebarSection>
-                {/* <Link to={{ pathname: `/`}}>All Notes</Link> */}
                 <SectionText>RECENT NOTES</SectionText>
-                {!notes ? null : notes.slice(0).reverse().slice(0, recentExpanded).map((note) => {
+                {notes && notes.slice(0).reverse().slice(0, recentExpanded).map((note) => {
                     return (
                         <StyledLink onTouchEnd={() => props.toggleSidebar()} to={{ pathname: `/note/${note._id}`}}>
                             <ListText>{note.title}</ListText>                        
@@ -131,7 +130,7 @@ const Sidebar = (props) => {
             </SidebarSection>
             <SidebarSection>
                 <SectionText>All Tags</SectionText>
-                {!tags ? null : tags.map((tag) => {
+                {tags && tags.map((tag) => {
                     return <Tag key={tag.id} onClick={() => console.log("Clicked tag: ", tag)} value={tag}/>
                 })}                
             </SidebarSection>

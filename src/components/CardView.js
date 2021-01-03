@@ -13,7 +13,7 @@ export default function NotesList (props) {
     const notes = props.notes;
     return (
         <Container>
-        {!notes ? null : notes.slice(0).reverse().map((note) => {
+        {notes && notes.slice(0).reverse().map((note) => {
             return(
                 <SmallCard
                     key={note._id}
@@ -21,7 +21,7 @@ export default function NotesList (props) {
                     title={note.title}
                     content={note.content}
                     category={note.category}
-                    tags={note.tags? note.tags : null}
+                    tags={note.tags && note.tags}
                     createdAt={note.createdAt}
                     updatedAt={note.updatedAt}
                     handleDelete={() => props.handleDelete(note._id)}
