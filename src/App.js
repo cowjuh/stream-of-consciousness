@@ -44,13 +44,13 @@ function App() {
 
   return (
     <Router>
-      <div>
+      <div style={{position: "relative"}}>
         {width < breakpoint
         ? <MobileMenu toggleSidebar={() => toggleSidebar(true)} />
         : <Sidebar notes={notes} tags={tags} categories={categories}/>
         }
         {sidebar ? <Sidebar mobile toggleSidebar={toggleSidebar} notes={notes} tags={tags} categories={categories}/> : null}
-        <div style={width < breakpoint ? null : {marginLeft:"250px"}}>
+        <div style={width < breakpoint ? {paddingTop:"56px"}: {marginLeft:"250px"}}>
           <Switch>
             <Redirect exact from="/" to="/category/All"/>
             <Route exact path="/" children={<MainContent setNotes={setNotes} notes={notes}/>}/>

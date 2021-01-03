@@ -73,20 +73,10 @@ export default function MainContent() {
 
   return (
     <Container className="px-4 d-flex flex-column justify-content-center align-items-center">
-        {/* <h6 style={{fontFamily:'Roboto Mono, monospace'}} className="mt-4 mb-4">🌎 HELLO HELLO HELLO WORLD 🌎</h6> */}
         <Configurable>
           <form onSubmit={handleFilter} className="mt-4">
             <InputField type="text" placeholder="Filter by tag" onChange={(e) => setFilter(e.target.value)}/>
           </form>
-          {/* <ViewIcon
-            onClick={() => setView("list")}
-            className="mr-4"
-            icon={faThList}
-          />
-          <ViewIcon
-            onClick={() => setView("card")}
-            icon={faThLarge}
-          /> */}
         </Configurable>
         <CardView notes={notes} handleDelete={deleteNote}/>
     </Container>
