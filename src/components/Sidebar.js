@@ -93,18 +93,18 @@ const Sidebar = (props) => {
                 }
             </SidebarSection>
             <SidebarSection>
-                <StyledLink to={{pathname: `/new`}}>
+                <StyledLink onTouchEnd={() => props.toggleSidebar()} to={{pathname: `/new`}}>
                     <Button value="New Note"/>
                 </StyledLink>
             </SidebarSection>
             <SidebarSection>
                 <SectionText>CATEGORIES</SectionText> 
-                <StyledLink  onClick={() => setActive("All")} to={{ pathname: `/category/All`}}>
+                <StyledLink  onTouchEnd={() => props.toggleSidebar()} onClick={() => setActive("All")} to={{ pathname: `/category/All`}}>
                     <ListText active={active == "All" ? true : false}>All</ListText>                        
                 </StyledLink>
                 {!categories ? null : categories.map((category) => {
                     return (
-                        <StyledLink  onClick={() => setActive(category)} to={{ pathname: `/category/${category}`}}>
+                        <StyledLink onTouchEnd={() => props.toggleSidebar()} onClick={() => {setActive(category)}} to={{ pathname: `/category/${category}`}}>
                             <ListText active={active == category ? true : false}>{category}</ListText>                        
                         </StyledLink>
                     )
@@ -115,7 +115,7 @@ const Sidebar = (props) => {
                 <SectionText>RECENT NOTES</SectionText>
                 {!notes ? null : notes.slice(0).reverse().slice(0, recentExpanded).map((note) => {
                     return (
-                        <StyledLink to={{ pathname: `/note/${note._id}`}}>
+                        <StyledLink onTouchEnd={() => props.toggleSidebar()} to={{ pathname: `/note/${note._id}`}}>
                             <ListText>{note.title}</ListText>                        
                         </StyledLink>
                     )
@@ -124,7 +124,7 @@ const Sidebar = (props) => {
                     style={{cursor: "pointer"}}
                     className="link"
                     onClick={() => {
-                        recentExpanded === 5 ? setRecentExpanded(notes.length) : setRecentExpanded(5)
+                        recentExpanded === 5 ? setRecentExpanded(notes.length) : setRecentExpanded(5);
                     }}>
                     {recentExpanded === 5 ? "Show all..." : "Show less..."}
                 </a>

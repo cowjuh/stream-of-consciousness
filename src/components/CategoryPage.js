@@ -48,10 +48,10 @@ const CategoryPage = () => {
             <h1>{category}</h1>
             <form className="mt-4 mb-4">
                 <InputField type="text" placeholder="Filter by tag" onChange={(e) => setFilter(e.target.value)}/>
-            </form>
+            </form>                
             {!notes ? null
                 : <CardView notes={notes}/>
-            }
+            }                
         </Container>
 
     )
