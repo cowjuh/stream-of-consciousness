@@ -166,14 +166,14 @@ const NoteEditor = (props) => {
                 {newNote
                     ? <Button onClick={handleNewNote} value="Create"/>
                     : editing
-                        ? <React.Fragment>
+                        ? <>
                             <Button onClick={handleSave} value="Save"/>
                             <ActionIcon onClick={handleDelete} className="ml-4" icon={faTrash}/>
-                        </React.Fragment>
-                        : <React.Fragment>
+                        </>
+                        : <>
                             <ActionIcon onClick={() => setEditing(true)} icon={faPencilAlt}/>
                             <ActionIcon onClick={handleDelete} className="ml-4" icon={faTrash}/>
-                        </React.Fragment>
+                        </>
                 }
             </Toolbar>               
             <EditorSection style={{marginTop: "50px"}}>

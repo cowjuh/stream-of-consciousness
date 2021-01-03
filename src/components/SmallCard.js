@@ -145,7 +145,7 @@ const SmallCard = (props) => {
     return(
         <StyledLink style={{textDecoration: 'none'}} to={`/note/${id}`}>
             <Card onMouseOver={() => setHover(true)} onMouseLeave={() => setHover(false)}>
-                <React.Fragment>
+                <>
                     <div className="d-flex justify-content-between mb-2">
                         <p className="m-0" style={{color: "#7A7F89"}}>{lastCreated}</p>
                         {category && <Flair value={category}/>}
@@ -160,7 +160,7 @@ const SmallCard = (props) => {
                             })}
                         </TagsContainer>
                     }
-                </React.Fragment>
+                </>
             </Card>
 
         </StyledLink>

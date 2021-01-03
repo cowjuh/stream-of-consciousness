@@ -84,12 +84,12 @@ const Sidebar = (props) => {
                     <h3 style={{margin: "0"}}>Jot.</h3>
                     <FontAwesomeIcon icon={faTimes} onTouchEnd={() => props.toggleSidebar()}/>   
                 </HamburgerContentHeader>
-                : <React.Fragment>
+                : <>
                     <StyledLink to={{pathname: `/`}}>
                         <h2>Jot.</h2>
                     </StyledLink>
                     <a href="https://github.com/cowjuh/stream-of-consciousness" style={{color:"gray", fontSize:"12px"}}>By Jenny Zhang</a>
-                </React.Fragment>
+                </>
                 }
             </SidebarSection>
             <SidebarSection>

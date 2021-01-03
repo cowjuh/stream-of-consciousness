@@ -11,7 +11,7 @@ const FullPageNote = (props) => {
             .then((res) => setNote(res))
     }, [])
     return (
-        <React.Fragment>
+        <>
             {note && 
                 <NoteEditor
                         key={note._id}
@@ -25,7 +25,7 @@ const FullPageNote = (props) => {
                         handleUpdate={props.handleUpdate}
                     />
                 }            
-        </React.Fragment>
+        </>
 
     )
 }

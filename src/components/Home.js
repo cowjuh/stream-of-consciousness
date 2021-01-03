@@ -18,9 +18,9 @@ const Home = () => {
     }, [])
 
     return (
-        <React.Fragment>
+        <>
             <MainContent setNotes={setNotes} notes={notes}/>      
-        </React.Fragment>            
+        </>            
     )
 }
 

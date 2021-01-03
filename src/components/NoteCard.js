@@ -106,7 +106,7 @@ const NoteCard = (props) => {
     return(
         <Card>
             {!editing
-                ? <React.Fragment>
+                ? <>
                     <p style={{color: "gray"}}>{lastCreated}</p>
                     {!category ? <p style={{color: "gray"}}>No Category</p> : <Flair value={category}/>}
                     <h2>{title}</h2>
@@ -130,7 +130,7 @@ const NoteCard = (props) => {
                         <FontAwesomeIcon icon={faPencilAlt} color="gray" onClick={() => setEditing(!editing)} cursor="pointer"/>
                         {props.createdAt != props.updatedAt && <p style={{color: "gray"}} className="m-0 ml-2">{lastUpdated}</p>}
                     </div>
-                </React.Fragment>
+                </>
                 : <Container>
                     <NoteEditor onSubmit={onSubmit}>
                         <InputField placeholder="Title" defaultValue={props.title} onChange={(e) => setTitle(e.target.value)} value={title}/>
