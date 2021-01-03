@@ -128,12 +128,12 @@ const Sidebar = (props) => {
                     {recentExpanded === 5 ? "Show all..." : "Show less..."}
                 </a>
             </SidebarSection>
-            <SidebarSection>
+            {/* <SidebarSection>
                 <SectionText>All Tags</SectionText>
                 {tags && tags.map((tag) => {
                     return <Tag key={tag.id} onClick={() => console.log("Clicked tag: ", tag)} value={tag}/>
                 })}                
-            </SidebarSection>
+            </SidebarSection> */}
         </SidebarContainer>            
     )
 }
