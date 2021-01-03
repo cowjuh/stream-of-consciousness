@@ -17,7 +17,7 @@ const MenuContainer = styled.div`
 const MobileMenu = (props) => {
     return( 
         <MenuContainer>
-            <FontAwesomeIcon style={{cursor: "pointer"}} onClick={() => props.toggleSidebar()} icon={faBars}/>
+            <FontAwesomeIcon className="burger-icon" style={{fontSize: "18px"}} onClick={() => props.toggleSidebar()} icon={faBars}/>
         </MenuContainer>
     )
 }
