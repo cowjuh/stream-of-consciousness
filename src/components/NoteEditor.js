@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import Button from './Atoms/Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTag, faThLarge, faCalendar, faTrash, faPencilAlt } from '@fortawesome/free-solid-svg-icons';
+import { faTag, faThLarge, faCalendar, faTrash, faPencilAlt, faLink } from '@fortawesome/free-solid-svg-icons';
 import './noteEditor.css'
 import dayjs from 'dayjs';
 import relativeTime from "dayjs/plugin/relativeTime";
@@ -82,6 +82,7 @@ const NoteEditor = (props) => {
     const [stringTags, setStringTags] = useState();
     const [editing, setEditing] = useState(false);
     const [newNote, setNewNote] = useState(props.newNote ? true : false);
+    const [copied, setCopied] = useState();
     const id = props && props.id;
     dayjs.extend(relativeTime);
     var lastUpdated = props && dayjs().to(props.updatedAt);
@@ -156,6 +157,15 @@ const NoteEditor = (props) => {
             .catch(err => {console.log(err)})
     }
 
+    const copyLinkToClipboard = () => {
+        navigator.clipboard.writeText(`http://hellohellohello.world/note/${id}`)
+        setCopied(true);
+        const timer = setTimeout(() => {
+            setCopied(false);
+        }, 3000);
+        return () => clearTimeout(timer);
+    }
+
     return(
         <Router>
 
@@ -163,15 +173,15 @@ const NoteEditor = (props) => {
             <Toolbar>
                 {newNote
                     ? <Button onClick={handleNewNote} value="Create"/>
-                    : editing
-                        ? <>
-                            <Button onClick={handleSave} value="Save"/>
-                            <ClickableIcon onClick={handleDelete} color={"#e91e63"} icon={faTrash}/>
-                        </>
-                        : <>
-                            <ClickableIcon margin onClick={() => setEditing(true)} color={"#3f51b5"} icon={faPencilAlt}/>
-                            <ClickableIcon onClick={handleDelete} color={"#e91e63"} icon={faTrash}/>
-                        </>
+                    : <> 
+                        {editing
+                            ? <Button onClick={handleSave} value="Save"/>
+                            : <ClickableIcon margin onClick={() => setEditing(true)} color={"#3f51b5"} icon={faPencilAlt}/>
+                        }
+                        <ClickableIcon margin onClick={copyLinkToClipboard} color={"#4caf97"} icon={faLink}/>
+                        <ClickableIcon margin onClick={handleDelete} color={"#e91e63"} icon={faTrash}/>
+                        {copied && <p style={{color: "#888888"}} className="m-0">Copied link to clipboard!</p>}
+                    </>
                 }
             </Toolbar>               
             <EditorSection style={{marginTop: "50px"}}>
