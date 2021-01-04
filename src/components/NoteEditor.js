@@ -175,7 +175,10 @@ const NoteEditor = (props) => {
                     ? <Button onClick={handleNewNote} value="Create"/>
                     : <> 
                         {editing
-                            ? <Button onClick={handleSave} value="Save"/>
+                            ? <>
+                                <Button onClick={handleSave} value="Save"/>
+                                <a onClick={() => setEditing(false)} style={{color: "#888888", cursor: "pointer"}} className="m-0 mr-2">Cancel</a>
+                            </>
                             : <ClickableIcon margin onClick={() => setEditing(true)} color={"#3f51b5"} icon={faPencilAlt}/>
                         }
                         <ClickableIcon margin onClick={copyLinkToClipboard} color={"#4caf97"} icon={faLink}/>
