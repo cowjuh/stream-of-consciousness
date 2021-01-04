@@ -8,6 +8,8 @@ const ButtonContainer = styled.button`
     transition: all 250ms;
     margin-right: 10px;
     padding: 5px 10px;
+    white-space: nowrap;
+    overflow: hidden;
     color: $color-black;
     box-shadow: 0 0 6px 0 rgba(157, 96, 212, 0.5);
     border: solid 3px transparent;

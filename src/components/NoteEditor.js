@@ -8,11 +8,10 @@ import dayjs from 'dayjs';
 import relativeTime from "dayjs/plugin/relativeTime";
 import {splitByCommas} from '../utils/api';
 import axios from 'axios';
-import {useHistory, useParams, BrowserRouter as Router} from 'react-router-dom';
+import {useHistory, BrowserRouter as Router} from 'react-router-dom';
 import Tag from './Atoms/Tag';
 import NotePreview from './NotePreview';
 import ClickableIcon from './Atoms/ClickableIcon';
-import { parse } from 'path';
 
 const EditorContainer = styled.div`
     display: flex;
@@ -195,7 +194,7 @@ const NoteEditor = (props) => {
                         placeholder="None"
                     >
                         {tags && tags.map((tag) => {
-                            return <span>{tag ? tag + "," : ""}</span>
+                            return (tag ? tag + "," : "")
                         })}
                     </TextContainer>
                     : <TextContainer>

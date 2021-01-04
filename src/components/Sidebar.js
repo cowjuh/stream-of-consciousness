@@ -99,7 +99,9 @@ const Sidebar = (props) => {
             <SidebarSection>
                 {props.mobile 
                 ? <HamburgerContentHeader>
-                    <h3 style={{margin: "0"}}>Jot.</h3>
+                    <StyledLink to={{pathname: `/`}} onClick={handleClick}>
+                        <Logo>Jot.</Logo>
+                    </StyledLink>
                     <FontAwesomeIcon icon={faTimes} style={{fontSize: "18px"}} onClick={handleClick}/>   
                 </HamburgerContentHeader>
                 : <>
