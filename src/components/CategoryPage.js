@@ -30,6 +30,19 @@ const InputField = styled.input`
     }
 `;
 
+const Toolbar = styled.div`
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    @media(max-width: 768px) {
+        flex-direction: column;
+        flex-wrap:wrap;
+        align-items: start;
+    }
+`;
+
 const CategoryPage = () => {
     const category = window.location.pathname.split("/").pop();
     const [notes, setNotes] = useState();
@@ -72,24 +85,29 @@ const CategoryPage = () => {
         setFilteredState(true);
     }
 
+    const resetFilter = () => {
+        setFilter("");
+        setFilteredState(false);
+    }
+
     return (
         <Container className="p-4">
             <SectionText>CATEGORY</SectionText>
             <h1>{category}</h1>
-            <div className="w-100 justify-content-between d-flex align-items-center">
+            <Toolbar>
                 <Button onClick={handleNewNote} value={"New Note"}/>
                 <form onSubmit={handleFilter} className="mt-4 mb-4">
-                    <InputField className="mr-3" type="text" placeholder="Filter by tag" onChange={(e) => setFilter(e.target.value)}/>
+                    <InputField className="mr-3" type="text" placeholder="Filter by tag" value={filter} onChange={(e) => setFilter(e.target.value)}/>
                     <button type="submit" style={{all: "initial"}}>
                         <ClickableIcon margin={filteredState ? true : false} onClick={null} color="#3f51b5" icon={faFilter}/>
                     </button>
                     {filteredState &&
-                        <button type="reset" onClick={() => setFilteredState(false)} style={{all: "initial"}}>
+                        <button type="reset" onSubmit={resetFilter} onClick={resetFilter} style={{all: "initial"}}>
                             <ClickableIcon color="#e91e63" icon={faTimes}/>
                         </button>
                     }
                 </form>                    
-            </div>
+            </Toolbar>
             {notes && <CardView notes={notes}/>}                
         </Container>
 
