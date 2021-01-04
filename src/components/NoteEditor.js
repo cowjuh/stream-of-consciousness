@@ -229,7 +229,7 @@ const NoteEditor = (props) => {
                         contentEditable={editing || newNote}
                         placeholder="None"
                     >
-                        {category && category}
+                        {category && !newNote && category}
                         {newNote && queryCategory}
                     </TextContainer>
                 </FieldInputContainer>
