@@ -100,13 +100,13 @@ const Sidebar = (props) => {
                 {props.mobile 
                 ? <HamburgerContentHeader>
                     <StyledLink to={{pathname: `/`}} onClick={handleClick}>
-                        <Logo>Jot.</Logo>
+                        <Logo>Notule.</Logo>
                     </StyledLink>
                     <FontAwesomeIcon icon={faTimes} style={{fontSize: "18px"}} onClick={handleClick}/>   
                 </HamburgerContentHeader>
                 : <>
                     <StyledLink to={{pathname: `/`}}>
-                        <Logo>Jot.</Logo>
+                        <Logo>Notule.</Logo>
                     </StyledLink>
                     {/* <a href="https://github.com/cowjuh/stream-of-consciousness" style={{color:"gray", fontSize:"12px"}}>By Jenny Zhang</a> */}
                 </>
