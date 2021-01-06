@@ -6,7 +6,6 @@ const userSchema = new Schema({
     firstName: {type: String, required: true},
     lastName: {type: String, required: true},
     googleID: {type: String, required: false},
-    password: {type: String, required: false},
     noteIDs: [{
         type: String,
         required: false,

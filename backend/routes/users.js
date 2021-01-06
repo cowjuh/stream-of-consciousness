@@ -12,7 +12,6 @@ router.route('/add').post((req, res) => {
   const firstName = req.body.firstName;
   const lastName = req.body.lastName;
   const googleID = req.body.googleID;
-  const password = req.body.password;
   const date = Date.parse(req.body.date);
 
   const newUser = new User({
@@ -20,7 +19,6 @@ router.route('/add').post((req, res) => {
     firstName,
     lastName,
     googleID,
-    password,
     date
   });
 
