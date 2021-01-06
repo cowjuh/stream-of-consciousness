@@ -38,7 +38,7 @@ const LoginPage = (props) => {
                 if(user.data != null) {
                     props.handleLogIn(user.data); 
                 } else {
-                    axios.post(`http://localhost:5000/api/users/add`, newUser)
+                    axios.post(`/api/users/add`, newUser)
                         .then((res) => props.handleLogIn(res.data))
                         .catch((err) => console.log(err))                    
                 }

@@ -107,4 +107,19 @@ Note.findById(req.params.id)
     .catch(err => res.status(400).json('Error: ' + err));
 });
 
+//  DANGEROUS - FOR TRANSFERRING FROM ACCOUNTS ONLY
+// router.route('/setUserID').post((req, res) => {
+//   const myID = "5ff4b3e19a84901caebe9e10"
+//   Note.find()
+//     .then(notes => {
+//       notes.forEach(note => {
+//         note.userID = myID;
+//         note.save()
+//           .then(note => res.json(note))
+//           .catch(err => res.status(400).json('Error: ' + err));
+//         });           
+//       })
+//     .catch(err => res.status(400).json('Error: ' + err));
+// });
+
 module.exports = router;
