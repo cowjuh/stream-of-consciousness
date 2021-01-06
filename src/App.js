@@ -9,8 +9,13 @@ import FullPageNote from './components/FullPageNote';
 import CategoryPage from './components/CategoryPage';
 import NoteEditor from './components/NoteEditor';
 import MobileMenu from './components/Mobile/MobileMenu';
+import LoginPage from './components/LoginPage';
+import GoogleLogoutButton from './components/Authentication/GoogleLogoutButton';
+import ProtectedRoute from './components/ProtectedRoute';
 
 function App() {
+  const [user, setUser] = useState();
+  const [isAuthenticated, setIsAuthenticated] = useState();
   const [notes, setNotes] = useState();
   const [tags, setTags] = useState();
   const [categories, setCategories] = useState();
@@ -27,44 +32,72 @@ function App() {
     setSidebar(!sidebar);
   }
 
+  const handleLogIn = (userObj) => {
+    setUser(userObj);
+    setIsAuthenticated(true);
+    handleUpdate();
+  }
+
+  const handleLogout = () => {
+    setUser(undefined);
+    setIsAuthenticated(false);
+    handleUpdate();
+    console.log("this stuff ran");
+  }
+
   useEffect(() => {
       const handleWindowResize = () => setWidth(window.innerWidth)
       window.addEventListener('resize', handleWindowResize);
-      getAllNotes()
-          .then(res => setNotes(res));
+      if(isAuthenticated && user) {
+        console.log(user);
+        getAllNotes(user._id)
+            .then(res => setNotes(res));
 
-      getAllTags()
-          .then(res => setTags(res));
+        getAllTags(user._id)
+            .then(res => setTags(res));
 
-      getAllCategories()
-      .then(res => setCategories(res));
-
+        getAllCategories(user._id)
+        .then(res => setCategories(res));
+      }
       return () => window.removeEventListener("resize", handleWindowResize);
   }, [update])
 
   return (
-    <Router>
-      <div style={{position: "relative"}}>
-        {width < breakpoint
-        ? <MobileMenu toggleSidebar={() => toggleSidebar(true)} />
-        : <Sidebar notes={notes} tags={tags} categories={categories}/>
-        }
-        {sidebar && <Sidebar mobile toggleSidebar={toggleSidebar} notes={notes} tags={tags} categories={categories}/>}
-        <div style={width < breakpoint ? {paddingTop:"56px"}: {marginLeft:"250px"}}>
-          <Switch>
-            <Redirect exact from="/" to="/category/All"/>
-            <Route exact path="/" children={<MainContent setNotes={setNotes} notes={notes}/>}/>
-            <Route exact path="/new" children={<NoteEditor newNote handleUpdate={handleUpdate}/>}/>
-            <Route path="/note/:id" render={(props) => <FullPageNote handleUpdate={handleUpdate} key={props.location.key}/>}/>
-            <Route path="/category/:category" render={(props) => <CategoryPage key={props.location.key}/>}/>
-            <Route path="/" children={<p>404 Page</p>}/>
-          </Switch>             
-        </div>
-     
-      </div>
+    <>
+      {!isAuthenticated
+        ? <>
+          <LoginPage handleLogIn={handleLogIn}/>
+          <Router>
+            <Switch>
+              <Redirect from="/" to="/auth"/>
+            </Switch>
+          </Router>
+        </> 
+        : <Router>
+          <div style={{position: "relative"}}>
+            {width < breakpoint
+            ? <MobileMenu toggleSidebar={() => toggleSidebar(true)} />
+            : <Sidebar notes={notes} tags={tags} categories={categories} handleLogout={handleLogout}/>
+            }
+            {sidebar && <Sidebar mobile toggleSidebar={toggleSidebar} notes={notes} tags={tags} categories={categories} handleLogout={handleLogout}/>}
+            <div style={width < breakpoint ? {paddingTop:"56px"}: {marginLeft:"250px"}}>
+              <Switch>
+                  <Redirect exact from="/" to="/category/All"/>
+                  <Redirect exact from="/auth" to="/category/All"/>
+                  <Route path="/hey" render={!isAuthenticated ? <Redirect to="/auth"/> : null}/>
+                  <Route exact path="/" children={<MainContent setNotes={setNotes} notes={notes}/>}/>
+                  <Route exact path="/new" children={<NoteEditor newNote user={user} handleUpdate={handleUpdate}/>}/>
+                  <Route path="/note/:id" render={(props) => <FullPageNote handleUpdate={handleUpdate} key={props.location.key}/>}/>
+                  <Route path="/category/:category" render={(props) => <CategoryPage user={user} key={props.location.key}/>}/>
+                  <Route exact path="/auth" component={LoginPage}/>
+                  <Route path="/" children={<p>404 Page</p>}/>
+              </Switch>             
+            </div>
+          </div>
+        </Router>
+      }    
+    </>
 
-
-    </Router>
   )
 }
 

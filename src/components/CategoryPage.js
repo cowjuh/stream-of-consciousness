@@ -43,7 +43,8 @@ const Toolbar = styled.div`
     }
 `;
 
-const CategoryPage = () => {
+const CategoryPage = (props) => {
+    const user = props.user;
     const category = window.location.pathname.split("/").pop();
     const [notes, setNotes] = useState();
     const [filter, setFilter] = useState();
@@ -56,14 +57,14 @@ const CategoryPage = () => {
     }
 
     useEffect(() => {
-        if(filteredState === false) {
+        if(filteredState === false && user) {
             if(category === "All") {
-                getAllNotes()
+                getAllNotes(user._id)
                 .then(res => setNotes(res))
                 .catch(err => console.log(err))
             }
             else {
-                getCategoryNotes(category)
+                getCategoryNotes(category, user._id)
                     .then(res => setNotes(res))
                     .catch(err => console.log(err))            
             }            

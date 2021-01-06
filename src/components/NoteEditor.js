@@ -75,6 +75,7 @@ const InputName = styled.p`
 `;
 
 const NoteEditor = (props) => {
+    const user = props.user;
     const [title, setTitle] = useState(props && props.title);
     const [content, setContent] = useState(props && props.content);
     const [category, setCategory] = useState(props && props.category);
@@ -123,7 +124,6 @@ const NoteEditor = (props) => {
     }
 
     const handleNewNote = () => {
-        props.handleUpdate();
         let tagArray;
         if(stringTags) {
             tagArray = splitByCommas(stringTags);
@@ -133,6 +133,7 @@ const NoteEditor = (props) => {
             tagArray = tags;
         }
         const updatedNote = {
+            userID: user._id,
             title: title,
             content: content,
             category: category,
@@ -146,8 +147,8 @@ const NoteEditor = (props) => {
             .catch(err => {
                 console.log(err)
             })
+        props.handleUpdate();
     }
-
 
     const handleDelete = () => {
         routeChange('/');

@@ -9,17 +9,23 @@ router.route('/').get((req, res) => {
 
 router.route('/add').post((req, res) => {
   const email = req.body.email;
-  const userID = req.body.userID;
+  const firstName = req.body.firstName;
+  const lastName = req.body.lastName;
+  const googleID = req.body.googleID;
+  const password = req.body.password;
   const date = Date.parse(req.body.date);
 
   const newUser = new User({
     email,
-    userID,
+    firstName,
+    lastName,
+    googleID,
+    password,
     date
   });
 
   newUser.save()
-  .then(() => res.json(newUser._id))
+  .then(() => res.json(newUser))
   .catch(err => res.status(400).json('Error: ' + err));
 });
 
@@ -29,9 +35,23 @@ User.findByIdAndDelete(req.params.id)
     .catch(err => res.status(400).json('Error: ' + err));
 });
 
+router.route('/email/:email').get((req, res) => {
+  User.findOne({"email": req.params.email})
+      .then((user) => res.json(user))
+      .catch(err => res.status(400).json('Error: ' + err));
+  });
+
 router.route('/:id').get((req, res) => {
   User.findById(req.params.id)
     .then(user => res.json(user))
+    .catch(err => res.status(400).json('Error: ' + err));
+});
+
+router.route('/addNote/:id').post((req, res) => {
+  const userID = req.params.id;
+  const noteID = req.body.noteID;
+  User.updateOne({_id: userID}, {$push: {noteIDs: noteID}})
+    .then(() => res.json('User updated.'))
     .catch(err => res.status(400).json('Error: ' + err));
 });
 
