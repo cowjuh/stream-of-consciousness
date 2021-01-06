@@ -7,6 +7,7 @@ import {BrowserRouter as Router, Route, Switch, Link} from 'react-router-dom';
 import {getAllNotes, getAllTags} from '../utils/api';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes} from '@fortawesome/free-solid-svg-icons';
+import GoogleLogoutButton from './Authentication/GoogleLogoutButton';
 
 const SidebarContainer = styled.div`
     height: 100vh;
@@ -87,6 +88,7 @@ const Sidebar = (props) => {
     const notes = props.notes;
     const categories = props.categories;
     const [recentExpanded, setRecentExpanded] = useState(5);
+    const handleLogout = props.handleLogout;
 
     const handleClick = () => {
         if(props.toggleSidebar) {
@@ -138,15 +140,17 @@ const Sidebar = (props) => {
                             <ListText>{note.title}</ListText>                        
                         </StyledLink>
                     )
-                })}                
-                <a 
-                    style={{cursor: "pointer"}}
-                    className="link"
-                    onClick={() => {
-                        recentExpanded === 5 ? setRecentExpanded(notes.length) : setRecentExpanded(5);
-                    }}>
-                    {recentExpanded === 5 ? "Show all..." : "Show less..."}
-                </a>
+                })} 
+                {notes && notes.length > 5 &&
+                    <a 
+                        style={{cursor: "pointer"}}
+                        className="link"
+                        onClick={() => {
+                            recentExpanded === 5 ? setRecentExpanded(notes.length) : setRecentExpanded(5);
+                        }}>
+                        {recentExpanded === 5 ? "Show all..." : "Show less..."}
+                    </a>
+                }
             </SidebarSection>
             {/* <SidebarSection>
                 <SectionText>All Tags</SectionText>
@@ -154,6 +158,7 @@ const Sidebar = (props) => {
                     return <Tag key={tag.id} onClick={() => console.log("Clicked tag: ", tag)} value={tag}/>
                 })}                
             </SidebarSection> */}
+            <GoogleLogoutButton handleLogout={handleLogout}/>
         </SidebarContainer>            
     )
 }

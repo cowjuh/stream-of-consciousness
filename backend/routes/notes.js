@@ -7,11 +7,18 @@ router.route('/').get((req, res) => {
   .catch(err => res.status(400).json('Error: ' + err));    
 });
 
-router.route('/filterByTag').get((req, res) => {
+router.route('/user/:id').get((req, res) => {
+  Note.find({userID: req.params.id})
+  .then(notes => res.json(notes))
+  .catch(err => res.status(400).json('Error: ' + err));    
+});
+
+router.route('/filterByTag/user/:id').get((req, res) => {
   let tagQuery = req.query.tag;
+  let id = req.params.id;
   let categoryQuery = req.query.category;
   if (tagQuery.length != 0 && (!categoryQuery || categoryQuery==="All")) {
-    Note.find({tags: {$all: tagQuery.split(',')} })
+    Note.find({tags: {$all: tagQuery.split(',')}}, {userID: id})
     .then(notes => res.json(notes))
     .catch(err => res.status(400).json('Error: ' + err));    
   }
@@ -31,20 +38,21 @@ router.route('/filterByTag').get((req, res) => {
   }
 });
 
-router.route('/tags').get((req, res) => {
-  Note.distinct("tags")
+router.route('/tags/user/:id').get((req, res) => {
+  Note.distinct("tags", {"userID": req.params.id})
   .then(notes => res.json(notes))
   .catch(err => res.status(400).json('Error: ' + err));    
 });
 
-router.route('/categories').get((req, res) => {
-  Note.distinct("category")
+router.route('/categories/user/:id').get((req, res) => {
+  Note.distinct("category", {"userID": req.params.id})
   .then(notes => res.json(notes))
   .catch(err => res.status(400).json('Error: ' + err));    
 });
 
 router.route('/categories/:category').get((req, res) => {
-  Note.find({category: req.params.category})
+  console.log(req.query.userID)
+  Note.find({userID: req.query.userID, category: req.params.category})
   .then(notes => res.json(notes))
   .catch(err => res.status(400).json('Error: ' + err));    
 });
@@ -54,9 +62,11 @@ router.route('/add').post((req, res) => {
   const content = req.body.content;
   const category = req.body.category;
   const tags = req.body.tags;
+  const userID = req.body.userID;
   const date = Date.parse(req.body.date);
 
   const newNote = new Note({
+    userID,
     title,
     content,
     category,

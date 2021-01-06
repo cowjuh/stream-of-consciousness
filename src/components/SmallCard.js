@@ -54,6 +54,7 @@ const ContentPreview = styled.div`
     -webkit-box-orient: vertical;  
     color: #7A7F89;
     color: ${props => props.color};
+    transition: all 250ms;
 `;
 
 const TagsContainer = styled.div`
@@ -63,6 +64,7 @@ const TagsContainer = styled.div`
     position: absolute;
     left: 0px;
     bottom: 0px;
+    transition: all 250ms;
     background-image: linear-gradient(#fde8ef00, #fde8ef00 ,#fde8ef);
 `;
 
