@@ -1,9 +1,14 @@
-import MarkdownText from './MarkdownText';
+import MarkdownText from "./MarkdownText";
+import styled from "styled-components";
 
-export default function NotePreview({content}) {
-    return(
-        <div>
-            <MarkdownText text={content}/>
-        </div>
-    )
+const PreviewContainer = styled.div`
+  max-width: 750px;
+`;
+
+export default function NotePreview({ content }) {
+  return (
+    <PreviewContainer>
+      <MarkdownText text={content} />
+    </PreviewContainer>
+  );
 }
