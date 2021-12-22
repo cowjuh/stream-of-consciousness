@@ -51,6 +51,8 @@ const Toolbar = styled.div`
 
 const TextContainer = styled.div`
   height: auto;
+  min-width: 50%;
+  flex: 1;
   border: none;
   resize: none;
   margin: 0px;
@@ -90,6 +92,7 @@ const PreviewContainer = styled.div`
 
 const EditorColumnsContainer = styled.div`
   display: ${(props) => (props.isMobile ? "block" : "flex")};
+  justify-content: space-between;
   width: 100%;
 `;
 
@@ -326,7 +329,7 @@ const NoteEditor = (props) => {
                   id="note-content"
                   suppressContentEditableWarning={true}
                   onInput={(e) => updatePreview(e)}
-                  onBlur={(e) => updatePreview(e)}
+                  onBlur={(e) => setContent(e.target.textContent)}
                   className="text-editor flex-grow-1"
                   contentEditable={true}
                   placeholder="This supports Markdown!"
