@@ -104,6 +104,7 @@ const NoteEditor = (props) => {
   const user = props.user;
   const [title, setTitle] = useState(props && props.title);
   const [content, setContent] = useState(props && props.content);
+  const [previewContent, setPreviewContent] = useState(props && props.content);
   const [category, setCategory] = useState(props && props.category);
   const [tags, setTags] = useState(props && props.tags);
   const [stringTags, setStringTags] = useState();
@@ -195,6 +196,11 @@ const NoteEditor = (props) => {
       setCopied(false);
     }, 3000);
     return () => clearTimeout(timer);
+  };
+
+  const updatePreview = (e) => {
+    e.preventDefault();
+    setPreviewContent(e.currentTarget.textContent);
   };
 
   return (
@@ -319,7 +325,8 @@ const NoteEditor = (props) => {
                 <TextContainer
                   id="note-content"
                   suppressContentEditableWarning={true}
-                  onBlur={(e) => setContent(e.currentTarget.textContent)}
+                  onInput={(e) => updatePreview(e)}
+                  onBlur={(e) => updatePreview(e)}
                   className="text-editor flex-grow-1"
                   contentEditable={true}
                   placeholder="This supports Markdown!"
@@ -334,7 +341,7 @@ const NoteEditor = (props) => {
             {editing && (
               <PreviewContainer>
                 <SectionText>MARKDOWN PREVIEW</SectionText>
-                <NotePreview content={content} />
+                <NotePreview content={previewContent} />
               </PreviewContainer>
             )}
           </EditorColumnsContainer>
