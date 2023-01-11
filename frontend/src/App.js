@@ -12,7 +12,7 @@ import MobileMenu from "./components/Mobile/MobileMenu";
 import LoginPage from "./components/LoginPage";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 
-const clientId = process.env.OAUTH_CLIENT_ID;
+const clientId = process.env.REACT_APP_OAUTH_CLIENT_ID;
 
 function App() {
   const [user, setUser] = useState();
@@ -43,7 +43,6 @@ function App() {
     setUser(undefined);
     setIsAuthenticated(false);
     handleUpdate();
-    console.log("this stuff ran");
   };
 
   useEffect(() => {

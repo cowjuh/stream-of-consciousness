@@ -48,6 +48,7 @@ const LoginPage = (props) => {
       <Logo>Notule.</Logo>
       <h4>Your stream of consciousness.</h4>
       <GoogleLogin onSuccess={onSuccess} onError={onFailure} />
+      hereree{process.env.OAUTH_CLIENT_ID}
     </Container>
   );
 };
