@@ -1,1 +1,0 @@
-"start": "concurrently \"node backend\" \"react-scripts start\"",
