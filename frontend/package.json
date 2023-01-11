@@ -53,5 +53,9 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "http://localhost:4000"
+  "proxy": "http://localhost:4000",
+  "engines": {
+    "node": "16.13.0",
+    "npm": "8.1.0"
+  }
 }
