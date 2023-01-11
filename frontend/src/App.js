@@ -15,7 +15,7 @@ import { GoogleOAuthProvider } from "@react-oauth/google";
 const clientId = process.env.REACT_APP_OAUTH_CLIENT_ID;
 
 function App() {
-  const [user, setUser] = useState(localStorage.getItem("userObj"));
+  const [user, setUser] = useState(localStorage.getItem("userObj") && JSON.parse(localStorage.getItem("userObj")));
   const [isAuthenticated, setIsAuthenticated] = useState(localStorage.getItem("userObj") ? true : false);
   const [notes, setNotes] = useState();
   const [tags, setTags] = useState();
@@ -35,7 +35,7 @@ function App() {
 
   const handleLogIn = (userObj) => {
     setUser(userObj);
-    localStorage.setItem("userObj", userObj);
+    localStorage.setItem("userObj", JSON.stringify(userObj));
     setIsAuthenticated(true);
     handleUpdate();
   };
@@ -50,20 +50,17 @@ function App() {
     const handleWindowResize = () => setWidth(window.innerWidth);
     window.addEventListener("resize", handleWindowResize);
     if (isAuthenticated && user) {
-      console.log(user);
       getAllNotes(user._id).then((res) => setNotes(res));
-
       getAllTags(user._id).then((res) => setTags(res));
-
       getAllCategories(user._id).then((res) => setCategories(res));
     }
     return () => window.removeEventListener("resize", handleWindowResize);
-  }, [update]);
+  }, [update, isAuthenticated, user]);
 
   return (
     <GoogleOAuthProvider clientId={clientId}>
       <>
-        {!isAuthenticated ? (
+        {!isAuthenticated && (
           <>
             <LoginPage handleLogIn={handleLogIn} />
             <Router>
@@ -72,7 +69,9 @@ function App() {
               </Switch>
             </Router>
           </>
-        ) : (
+        )}
+
+        {isAuthenticated && categories && notes && user && (
           <Router>
             <div style={{ position: "relative" }}>
               {width < breakpoint ? (
