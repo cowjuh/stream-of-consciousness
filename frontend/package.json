@@ -55,7 +55,7 @@
   },
   "proxy": "http://localhost:4000",
   "engines": {
-    "node": "16.13.2",
-    "npm": "8.1.2"
+    "node": "17.8.0",
+    "npm": "8.5.5"
   }
 }
