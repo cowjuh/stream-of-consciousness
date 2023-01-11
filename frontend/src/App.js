@@ -13,7 +13,6 @@ import LoginPage from "./components/LoginPage";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 
 const clientId = process.env.OAUTH_CLIENT_ID;
-// const clientId = "156275579203-g8i8v71ufe3gcc3li5emsv176adh12mf.apps.googleusercontent.com";
 
 function App() {
   const [user, setUser] = useState();
