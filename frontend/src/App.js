@@ -1,10 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {
-  BrowserRouter as Router,
-  Route,
-  Switch,
-  Redirect,
-} from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch, Redirect } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 import Sidebar from "./components/Sidebar";
@@ -15,8 +10,10 @@ import CategoryPage from "./components/CategoryPage";
 import NoteEditor from "./components/NoteEditor";
 import MobileMenu from "./components/Mobile/MobileMenu";
 import LoginPage from "./components/LoginPage";
-import GoogleLogoutButton from "./components/Authentication/GoogleLogoutButton";
-import ProtectedRoute from "./components/ProtectedRoute";
+import { GoogleOAuthProvider } from "@react-oauth/google";
+
+const clientId = process.env.OAUTH_CLIENT_ID;
+// const clientId = "156275579203-g8i8v71ufe3gcc3li5emsv176adh12mf.apps.googleusercontent.com";
 
 function App() {
   const [user, setUser] = useState();
@@ -65,92 +62,59 @@ function App() {
   }, [update]);
 
   return (
-    <>
-      {!isAuthenticated ? (
-        <>
-          <LoginPage handleLogIn={handleLogIn} />
-          <Router>
-            <Switch>
-              <Redirect from="/" to="/auth" />
-            </Switch>
-          </Router>
-        </>
-      ) : (
-        <Router>
-          <div style={{ position: "relative" }}>
-            {width < breakpoint ? (
-              <MobileMenu toggleSidebar={() => toggleSidebar(true)} />
-            ) : (
-              <Sidebar
-                notes={notes}
-                tags={tags}
-                categories={categories}
-                handleLogout={handleLogout}
-              />
-            )}
-            {sidebar && (
-              <Sidebar
-                mobile
-                toggleSidebar={toggleSidebar}
-                notes={notes}
-                tags={tags}
-                categories={categories}
-                handleLogout={handleLogout}
-              />
-            )}
-            <div
-              style={
-                width < breakpoint
-                  ? { paddingTop: "56px" }
-                  : { marginLeft: "250px" }
-              }
-            >
+    <GoogleOAuthProvider clientId={clientId}>
+      <>
+        {!isAuthenticated ? (
+          <>
+            <LoginPage handleLogIn={handleLogIn} />
+            <Router>
               <Switch>
-                <Redirect exact from="/" to="/category/All" />
-                <Redirect exact from="/auth" to="/category/All" />
-                <Route
-                  path="/hey"
-                  render={!isAuthenticated ? <Redirect to="/auth" /> : null}
-                />
-                <Route
-                  exact
-                  path="/"
-                  children={<MainContent setNotes={setNotes} notes={notes} />}
-                />
-                <Route
-                  exact
-                  path="/new"
-                  children={
-                    <NoteEditor
-                      newNote
-                      user={user}
-                      handleUpdate={handleUpdate}
-                    />
-                  }
-                />
-                <Route
-                  path="/note/:id"
-                  render={(props) => (
-                    <FullPageNote
-                      handleUpdate={handleUpdate}
-                      key={props.location.key}
-                    />
-                  )}
-                />
-                <Route
-                  path="/category/:category"
-                  render={(props) => (
-                    <CategoryPage user={user} key={props.location.key} />
-                  )}
-                />
-                <Route exact path="/auth" component={LoginPage} />
-                <Route path="/" children={<p>404 Page</p>} />
+                <Redirect from="/" to="/auth" />
               </Switch>
+            </Router>
+          </>
+        ) : (
+          <Router>
+            <div style={{ position: "relative" }}>
+              {width < breakpoint ? (
+                <MobileMenu toggleSidebar={() => toggleSidebar(true)} />
+              ) : (
+                <Sidebar notes={notes} tags={tags} categories={categories} handleLogout={handleLogout} />
+              )}
+              {sidebar && (
+                <Sidebar
+                  mobile
+                  toggleSidebar={toggleSidebar}
+                  notes={notes}
+                  tags={tags}
+                  categories={categories}
+                  handleLogout={handleLogout}
+                />
+              )}
+              <div style={width < breakpoint ? { paddingTop: "56px" } : { marginLeft: "250px" }}>
+                <Switch>
+                  <Redirect exact from="/" to="/category/All" />
+                  <Redirect exact from="/auth" to="/category/All" />
+                  <Route path="/hey" render={!isAuthenticated ? <Redirect to="/auth" /> : null} />
+                  <Route exact path="/" children={<MainContent setNotes={setNotes} notes={notes} />} />
+                  <Route exact path="/new" children={<NoteEditor newNote user={user} handleUpdate={handleUpdate} />} />
+                  <Route
+                    path="/note/:id"
+                    render={(props) => <FullPageNote handleUpdate={handleUpdate} key={props.location.key} />}
+                  />
+                  <Route
+                    path="/category/:category"
+                    render={(props) => <CategoryPage user={user} key={props.location.key} />}
+                  />
+                  <Route exact path="/auth" component={LoginPage} />
+                  <Route path="/" children={<p>404 Page</p>} />
+                </Switch>
+              </div>
             </div>
-          </div>
-        </Router>
-      )}
-    </>
+          </Router>
+        )}
+      </>
+    </GoogleOAuthProvider>
   );
 }
 

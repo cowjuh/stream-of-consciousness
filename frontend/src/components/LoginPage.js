@@ -1,44 +1,22 @@
-import GoogleLogin from "react-google-login";
-import React, { useState } from "react";
+import React from "react";
 import axios from "axios";
 import styled from "styled-components";
 import { Container } from "react-bootstrap";
-
-const clientId =
-  "979808801196-vn8rcr3df9c1qtgm1adfo4geksn3sioi.apps.googleusercontent.com";
+import { GoogleLogin } from "@react-oauth/google";
+import jwt_decode from "jwt-decode";
 
 const Logo = styled.h1`
   font-size: 50px;
   display: inline-block;
   margin: 0;
-  background: -webkit-linear-gradient(
-    110deg,
-    #e1f549,
-    #29d0be,
-    #6cb8ea,
-    #ff5959
-  );
+  background: -webkit-linear-gradient(110deg, #e1f549, #29d0be, #6cb8ea, #ff5959);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 `;
 
-const GradientBlock = styled.div`
-  height: 20px;
-  width: 100px;
-  background: -webkit-linear-gradient(
-    110deg,
-    #e1f549,
-    #29d0be,
-    #6cb8ea,
-    #ff5959
-  );
-`;
-
 const LoginPage = (props) => {
   const onSuccess = (res) => {
-    const inputEmail = res.profileObj.email;
-    const profileObj = res.profileObj;
-    console.log("PROFILE OBJECT: ", profileObj);
+    const profileObj = jwt_decode(res.credential);
     const newUser = {
       email: profileObj.email,
       firstName: profileObj.givenName,
@@ -67,18 +45,9 @@ const LoginPage = (props) => {
 
   return (
     <Container className="vh-100 d-flex flex-column justify-content-center align-items-center">
-      {/* <GradientBlock/> */}
       <Logo>Notule.</Logo>
       <h4>Your stream of consciousness.</h4>
-      <GoogleLogin
-        clientId={clientId}
-        buttonText="Sign up with Google"
-        onSuccess={onSuccess}
-        onFailure={onFailure}
-        cookiePolicy={"single_host_origin"}
-        style={{ marginTop: "100px" }}
-        isSignedIn={true}
-      />
+      <GoogleLogin onSuccess={onSuccess} onError={onFailure} />
     </Container>
   );
 };
