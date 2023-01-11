@@ -7,7 +7,7 @@ require("dotenv").config({ path: __dirname + "/.env" });
 
 const app = express();
 
-const publicPath = path.join(__dirname, "../", "/build");
+const publicPath = path.join(__dirname, "../", "/frontend/build");
 const uri = process.env.ATLAS_URI;
 const notesRouter = require("./routes/notes");
 const usersRouter = require("./routes/users");
@@ -24,7 +24,7 @@ app.use("/api/users", usersRouter);
 
 app.use(express.static(publicPath));
 app.get("*", (req, res) => {
-  res.sendFile(path.join(publicPath, "/index.html"));
+  res.sendFile(path.join(publicPath, "/frontend/index.html"));
 });
 
 mongoose.connect(uri, { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true });
