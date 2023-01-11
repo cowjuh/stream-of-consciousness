@@ -15,8 +15,8 @@ import { GoogleOAuthProvider } from "@react-oauth/google";
 const clientId = process.env.REACT_APP_OAUTH_CLIENT_ID;
 
 function App() {
-  const [user, setUser] = useState();
-  const [isAuthenticated, setIsAuthenticated] = useState();
+  const [user, setUser] = useState(localStorage.getItem("userObj"));
+  const [isAuthenticated, setIsAuthenticated] = useState(localStorage.getItem("userObj") ? true : false);
   const [notes, setNotes] = useState();
   const [tags, setTags] = useState();
   const [categories, setCategories] = useState();
@@ -35,6 +35,7 @@ function App() {
 
   const handleLogIn = (userObj) => {
     setUser(userObj);
+    localStorage.setItem("userObj", userObj);
     setIsAuthenticated(true);
     handleUpdate();
   };
